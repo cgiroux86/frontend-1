@@ -8,9 +8,9 @@ export default function Navbar() {
 
       </div>
       <div className="nav_links">
-        <Link href="/"><a>Login</a></Link>
-        <Link href="/"><a>Register</a></Link>
-        <Link href="/"><a>Home</a></Link>
+        <Link href="/login"><a>Login</a></Link>
+        <Link href="/register"><a>Register</a></Link>
+        <Link href="/home"><a>Home</a></Link>
       </div>
     </div>
   )
