@@ -2,6 +2,7 @@ import { composePlugins } from "next-compose-plugins/lib/compose";
 import React, { useState } from "react";
 import styles from "../../styles/login.scss";
 import axios from "../../utils/axiosDefaults";
+import NavBar from "../../page_components/navbar";
 
 const Login = () => {
   axios.defaults.baseURL = process.env.API_URL;
@@ -29,22 +30,25 @@ const Login = () => {
   };
 
   return (
-    <div className={styles.login} style={{ background: "blue" }}>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="email"
-          onChange={handleChange}
-          placeholder="Email"
-        />
-        <input
-          type="password"
-          name="password"
-          onChange={handleChange}
-          placeholder="Password"
-        />
-        <button>Login</button>
-      </form>
+    <div>
+      <NavBar />
+      <div className={styles.login} style={{ background: "blue" }}>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            name="email"
+            onChange={handleChange}
+            placeholder="Email"
+          />
+          <input
+            type="password"
+            name="password"
+            onChange={handleChange}
+            placeholder="Password"
+          />
+          <button>Login</button>
+        </form>
+      </div>
     </div>
   );
 };
