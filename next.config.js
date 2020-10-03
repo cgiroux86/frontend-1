@@ -37,6 +37,9 @@ const optimizedImagesConfig = {
 };
 
 const nextConfiguration = {
+  env: {
+    API_URL: "http://localhost:5000/api",
+  },
   webpack: (config) => {
     config.plugins.push(
       new webpack.DefinePlugin({

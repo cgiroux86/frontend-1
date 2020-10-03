@@ -1,33 +1,35 @@
-import React, { useState } from 'react';
+import { composePlugins } from "next-compose-plugins/lib/compose";
+import React, { useState } from "react";
+import styles from "../../styles/login.scss";
+import axios from "../../utils/axiosDefaults";
 
 const Login = () => {
-
+  axios.defaults.baseURL = process.env.API_URL;
+  console.log(axios.defaults.baseURL);
   const [credentials, setCredentials] = useState({
-    email: '',
-    password: ''
-  })
+    email: "",
+    password: "",
+  });
 
   const handleChange = (e) => {
     setCredentials({
       ...credentials,
-      [e.target.name]: e.target.value
-    })
-  }
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post(``, credentials)
-      .then(res => {
-
-      })
-      .catch(err => {
-        console.log(err)
-      })
-  }
+      .post("/auth/login", credentials)
+      .then((res) => console.log(res))
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
-    <div className="login">
+    <div className={styles.login} style={{ background: "blue" }}>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -45,6 +47,6 @@ const Login = () => {
       </form>
     </div>
   );
-}
+};
 
 export default Login;
