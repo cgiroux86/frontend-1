@@ -1,0 +1,26 @@
+.navbar{
+  width: 100vw;
+  height: 7vh;
+  margin: 0;
+  display: flex;
+
+  .logo{
+    width: 60%;
+    height: 100%;
+    display: flex;
+  }
+
+  .nav_links{
+    width: 40%;
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    
+    a{
+      text-decoration: none;
+      color: black;
+      font-size: 1.3rem;
+    }
+  }
+}
