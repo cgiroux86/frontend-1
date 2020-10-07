@@ -3,9 +3,23 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+<<<<<<< HEAD
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+=======
+    "@fortawesome/fontawesome-svg-core": "^1.2.31",
+    "@fortawesome/free-solid-svg-icons": "^5.15.0",
+    "@fortawesome/react-fontawesome": "^0.1.11",
+    "@zeit/next-css": "^1.0.1",
+    "@zeit/next-sass": "^1.0.1",
+    "axios": "^0.20.0",
+    "copy-webpack-plugin": "^6.2.0",
+    "html-webpack-plugin": "^4.5.0",
+    "next": "9.5.3",
+    "next-compose-plugins": "^2.2.0",
+    "next-optimized-images": "^2.6.2",
+>>>>>>> 930b5d4c850d48a3fbe6af5b1a81f0a3043d72ce
     "node-sass": "^4.14.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -13,6 +27,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
     "recoil": "^0.0.13",
+<<<<<<< HEAD
     "styled-components": "^5.2.0"
   },
   "scripts": {
@@ -35,5 +50,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+=======
+    "styled-components": "^5.2.0",
+    "webpack": "^4.44.2"
+>>>>>>> 930b5d4c850d48a3fbe6af5b1a81f0a3043d72ce
   }
 }
