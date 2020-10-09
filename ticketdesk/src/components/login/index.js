@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import styles from "../../styles/login.scss";
 import NavBar from "../shared/NavBar";
 import axios from "axios";
 
@@ -8,7 +7,6 @@ const Login = ({ history }) => {
     email: "",
     password: "",
   });
-  console.log(credentials, "credentials");
 
   const handleChange = (e) => {
     setCredentials({
@@ -18,7 +16,6 @@ const Login = ({ history }) => {
   };
 
   const handleSubmit = (e) => {
-    console.log("URL => ", `${axios.defaults.baseURL}/auth/login`);
     e.preventDefault();
     axios
       .post("/auth/login", credentials)
