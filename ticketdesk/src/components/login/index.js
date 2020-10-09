@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 import styles from "../../styles/login.scss";
-import axios from "../../utils/axiosDefaults";
 import NavBar from "../shared/NavBar";
+import axios from "axios";
 
-const Login = () => {
-  axios.defaults.baseURL = process.env.API_URL;
-  console.log(axios.defaults.baseURL);
+const Login = ({ history }) => {
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
   });
+  console.log(credentials, "credentials");
 
   const handleChange = (e) => {
     setCredentials({
@@ -19,10 +18,14 @@ const Login = () => {
   };
 
   const handleSubmit = (e) => {
+    console.log("URL => ", `${axios.defaults.baseURL}/auth/login`);
     e.preventDefault();
     axios
       .post("/auth/login", credentials)
-      .then((res) => console.log(res))
+      .then((res) => {
+        localStorage.setItem("token", res.data.token);
+        history.push("/dashboard");
+      })
       .catch((err) => {
         console.log(err);
       });

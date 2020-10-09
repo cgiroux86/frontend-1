@@ -3,7 +3,7 @@ import styles from "../../styles/register.scss";
 import NavBar from "../shared/NavBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
-import axios from "../../utils/axiosDefaults";
+import axios from "axios";
 
 const Register = () => {
   const [credentials, setCredentials] = useState({

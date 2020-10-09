@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Link, Route } from "react-router-dom";
 import Home from "./components/home";
 import Login from "./components/login";
 import Register from "./components/register";
+import "./utils/axiosDefaults";
 function App() {
   return (
     <div className="App">
