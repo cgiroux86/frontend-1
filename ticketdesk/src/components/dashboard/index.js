@@ -138,12 +138,12 @@ const Dashboard = () => {
 
   const choose = (e) => {
     console.log("e.target: ", e.target.id);
-    if (e.target.id == "all") {
+    if (e.target.id === "all") {
       setActive({
         all: true,
         my: false,
       });
-    } else if (e.target.id == "my") {
+    } else if (e.target.id === "my") {
       setActive({
         all: false,
         my: true,
@@ -204,42 +204,7 @@ const Dashboard = () => {
             </div>
           </div>
           <div className="filters">
-            <h3></h3>
             <Expansion />
-            {/* <select>
-            <option>Filtered Tickets</option>
-            <option>Filtered Tickets</option>
-            <option>Filtered Tickets</option>
-            <option>Filtered Tickets</option>
-          </select>
-          <select>
-            <option>Categories</option>
-            <option>Categories</option>
-            <option>Categories</option>
-            <option>Categories</option>
-          </select>
-          <select>
-            <option>Status</option>
-            <option>Status</option>
-            <option>Status</option>
-            <option>Status</option>
-          </select>
-          <select>
-            <option>Assigned To</option>
-            <option>Assigned To</option>
-            <option>Assigned To</option>
-            <option>Assigned To</option>
-          </select>
-          <select>
-            <option>Urgency</option>
-            <option>Urgency</option>
-            <option>Urgency</option>
-            <option>Urgency</option>
-          </select>
-          <h3></h3>
-          <h3></h3>
-          <h3></h3>
-          <h3></h3> */}
             <div className="bottom_filter">
               <h3>Sort Tickets</h3>
             </div>

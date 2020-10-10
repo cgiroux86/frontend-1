@@ -1,7 +1,6 @@
 import React from "react";
 import Navbar from "../shared/NavBar";
 import screen from "../../images/screen.png";
-import styles from "../../styles/landing.scss";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
@@ -28,7 +27,7 @@ export default function Home() {
           animate={{ x: -150 }}
           transition={{ ease: "easeOut", duration: 1 }}
         >
-          <img src={screen} />
+          <img src={screen} alt="iphone with ticket queue tickets displayed" />
         </motion.div>
       </div>
     </div>

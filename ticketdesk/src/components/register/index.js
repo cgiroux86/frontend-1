@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import styles from "../../styles/register.scss";
 import NavBar from "../shared/NavBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
