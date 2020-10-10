@@ -5,13 +5,17 @@ import Home from "./components/home";
 import Login from "./components/login";
 import Register from "./components/register";
 import "./utils/axiosDefaults";
+import Dashboard from './components/dashboard';
+
 function App() {
+
   return (
     <div className="App">
       <Router>
         <Route exact path="/" component={Home} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />
+        <Route exact path="/dashboard" component={Dashboard} />
       </Router>
     </div>
   );
