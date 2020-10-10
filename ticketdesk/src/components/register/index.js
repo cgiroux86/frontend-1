@@ -12,6 +12,8 @@ const Register = () => {
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
+    first_name: "",
+    last_name: "",
   });
 
   const [showPassword, setShowPassword] = useState(false);
@@ -40,11 +42,33 @@ const Register = () => {
   };
 
   const responseGoogle = (response) => {
-    console.log(response);
+    const user = {
+      first_name: response.profileObj.givenName,
+      last_name: response.profileObj.familyName,
+      email: response.profileObj.email,
+      password: response.profileObj.googleId,
+    };
+    axios
+      .post("/auth/register", user)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
   };
 
   const responseFacebook = (response) => {
-    console.log(response);
+    let split = response.name.split(" ");
+    const user = {
+      first_name: split[0],
+      last_name: split[1],
+      email: response.email,
+      password: response.id,
+    };
+    console.log("USER =>", user);
+    axios
+      .post("/auth/register", user)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
