@@ -8,7 +8,7 @@ import { GoogleLogin } from "react-google-login";
 import FacebookLogin from "react-facebook-login";
 import { faFacebook } from "@fortawesome/free-brands-svg-icons";
 
-const Register = () => {
+const Register = ({ history }) => {
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
@@ -62,11 +62,10 @@ const Register = () => {
       email: response.email,
       password: response.id,
     };
-    console.log("USER =>", user);
     axios
       .post("/auth/register", user)
       .then((res) => {
-        console.log(res);
+        history.push("/login");
       })
       .catch((err) => console.log(err));
   };
