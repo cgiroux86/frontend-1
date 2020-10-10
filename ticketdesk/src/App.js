@@ -5,10 +5,10 @@ import Home from "./components/home";
 import Login from "./components/login";
 import Register from "./components/register";
 import "./utils/axiosDefaults";
-import Dashboard from './components/dashboard';
+import Dashboard from "./components/dashboard";
+import Expansion from "./components/dashboard/Expansion";
 
 function App() {
-
   return (
     <div className="App">
       <Router>
@@ -16,6 +16,7 @@ function App() {
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />
         <Route exact path="/dashboard" component={Dashboard} />
+        <Route exact path="/expansion" component={Expansion} />
       </Router>
     </div>
   );
