@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Avatar } from "@material-ui/core";
 import Expansion from "./Expansion";
 import NavBar from "../shared/NavBar";
+import Card from "./Card";
+import TicketInfo from "./TicketInfo";
 
 const Container = styled.div`
   height: 100vh;
-  width: 100vw;
+  width: 100%;
   display: flex;
 
   .left {
-    height: 100%;
+    height: 100vh;
     width: 15%;
     background: white;
     display: flex;
@@ -53,16 +54,9 @@ const Container = styled.div`
     width: 60%;
     height: 100%;
     display: flex;
+    padding-left: 3%;
     flex-direction: column;
 
-    .card {
-      width: 50%;
-      margin: 2%;
-      height: 100px;
-      background: white;
-      border-radius: 5px;
-      box-shadow: 2px 2px 2px 2px lightgrey;
-      display: flex;
 
       .left {
         width: 15%;
@@ -98,7 +92,6 @@ const Container = styled.div`
       .right {
         width: 15%;
         height: 100%;
-        border: none;
 
         p {
         }
@@ -108,8 +101,7 @@ const Container = styled.div`
 
   .right {
     height: 100%;
-    width: 25%;
-    border: 1px solid black;
+    width: 30%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -130,14 +122,52 @@ const Container = styled.div`
   }
 `;
 
+const data = [
+  {
+    age: 4,
+    title: "People Problem",
+    description: "I got a people problem",
+    assigned_to: "Chris Giroux",
+    attempted_solutions:
+      "Apple Genius Bar, clearing cache and reformatting hard drive",
+  },
+  {
+    age: 4,
+    title: "People Problem",
+    description: "I got a people problem",
+    assigned_to: "Brandon Teague",
+  },
+  {
+    age: 4,
+    title: "People Problem",
+    description: "I got a people problem",
+    assigned_to: "Scott Harris",
+    priority: "low",
+  },
+  {
+    age: 4,
+    title: "People Problem",
+    description: "I got a people problem",
+    assigned_to: "Joe Schmoe",
+    priority: "high",
+  },
+  {
+    age: 4,
+    title: "People Problem",
+    description: "I got a people problem",
+    //   assigned_to: "Jana Scheuble",
+  },
+];
+
 const Dashboard = () => {
   const [active, setActive] = useState({
     all: true,
     my: false,
   });
 
+  const [selectedTicket, setSelectedTicket] = useState(data[0]);
+
   const choose = (e) => {
-    console.log("e.target: ", e.target.id);
     if (e.target.id === "all") {
       setActive({
         all: true,
@@ -151,38 +181,6 @@ const Dashboard = () => {
     }
   };
 
-  const data = [
-    {
-      age: 4,
-      title: "People Problem",
-      description: "I got a people problem",
-      assigned_to: "Chris Giroux",
-    },
-    {
-      age: 4,
-      title: "People Problem",
-      description: "I got a people problem",
-      assigned_to: "Brandon Teague",
-    },
-    {
-      age: 4,
-      title: "People Problem",
-      description: "I got a people problem",
-      assigned_to: "Scott Harris",
-    },
-    {
-      age: 4,
-      title: "People Problem",
-      description: "I got a people problem",
-      assigned_to: "Joe Schmoe",
-    },
-    {
-      age: 4,
-      title: "People Problem",
-      description: "I got a people problem",
-      //   assigned_to: "Jana Scheuble",
-    },
-  ];
   return (
     <>
       <NavBar />
@@ -193,7 +191,7 @@ const Dashboard = () => {
           </div>
           <div className="main">
             <div className={active.all ? "active" : "main_button"}>
-              <h2 onClick={(e) => choose(e)} id="all">
+              <h2 onClick={choose} id="all">
                 All Tickets
               </h2>
             </div>
@@ -205,46 +203,17 @@ const Dashboard = () => {
           </div>
           <div className="filters">
             <Expansion />
-            <div className="bottom_filter">
-              <h3>Sort Tickets</h3>
-            </div>
+            <div className="bottom_filter"></div>
           </div>
         </div>
         <div className="middle">
-          {data.map((i, index) => {
-            return (
-              <div className="card">
-                <div className="left">
-                  <p>
-                    {i.age}
-                    <br />
-                    days
-                    <br />
-                    old
-                  </p>
-                </div>
-                <div className="middle">
-                  <h2>{i.title}</h2>
-                  <p>{i.description}</p>
-                </div>
-                <div className="right">
-                  {i.assigned_to && (
-                    <div>
-                      <Avatar
-                        style={{ color: "white", fontWeight: "bold" }}
-                        src={i.image}
-                      >{`${i.assigned_to.split(" ")[0][0]}${
-                        i.assigned_to.split(" ")[1][0]
-                      }`}</Avatar>
-                      {/* <p>{i.assigned_to}</p> */}
-                    </div>
-                  )}
-                </div>
-              </div>
-            );
+          {data.map((item) => {
+            return <Card key={Math.floor(Math.random() * 10000)} info={item} />;
           })}
         </div>
-        <div className="right"></div>
+        <div className="main_right">
+          <TicketInfo ticket={selectedTicket} id={1} />
+        </div>
       </Container>
     </>
   );

@@ -2,9 +2,8 @@ import React from "react";
 import Navbar from "../shared/NavBar";
 import screen from "../../images/screen.png";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
 
-export default function Home() {
+export default function Home({ history }) {
   return (
     <div>
       <Navbar />
@@ -17,8 +16,8 @@ export default function Home() {
             <p style={{ fontSize: "1.2em" }}>
               Submit help tickets and view open tickets all in one place.
             </p>
-            <button>
-              <Link to="/register">Get Started</Link>
+            <button onClick={() => history.push("/register")}>
+              Get Started
             </button>
           </div>
         </div>

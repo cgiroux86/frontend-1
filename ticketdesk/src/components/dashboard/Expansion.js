@@ -69,6 +69,12 @@ export default function MultiSelectTreeView() {
     high: false,
   });
 
+  const [sortItems, setSortItems] = useState({
+    submit: false,
+    urgency: false,
+    category: false,
+  });
+
   const handleCategoryChange = (e) => {
     let name = e.target.getAttribute("name");
     setCategories({ ...categories, [name]: !categories[name] });
@@ -82,6 +88,11 @@ export default function MultiSelectTreeView() {
   const handleUrgencyChange = (e) => {
     let name = e.target.getAttribute("name");
     setUrgency({ ...urgency, [name]: !urgency[name] });
+  };
+
+  const handleSortChange = (e) => {
+    let name = e.target.getAttribute("name");
+    setSortItems({ ...sortItems, [name]: !sortItems[name] });
   };
 
   return (
@@ -190,6 +201,36 @@ export default function MultiSelectTreeView() {
               High
             </Typography>
           </TreeItem>
+        </TreeItem>
+        <TreeItem
+          nodeId="20"
+          label={
+            <Typography style={{ fontSize: "1.3rem", fontWeight: "bold" }}>
+              Sort Tickets
+            </Typography>
+          }
+        >
+          <Typography
+            name="urgency"
+            onClick={handleSortChange}
+            className={sortItems.urgency ? classes.active : classes.child}
+          >
+            Urgency
+          </Typography>
+          <Typography
+            onClick={handleSortChange}
+            name="submit"
+            className={sortItems.submit ? classes.active : classes.child}
+          >
+            Submitted
+          </Typography>
+          <Typography
+            onClick={handleSortChange}
+            name="category"
+            className={sortItems.category ? classes.active : classes.child}
+          >
+            Category
+          </Typography>
         </TreeItem>
       </TreeView>
     </MuiThemeProvider>
