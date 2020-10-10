@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { Avatar } from "@material-ui/core";
 import Expansion from "./Expansion";
+import NavBar from "../shared/NavBar";
 
 const Container = styled.div`
   height: 100vh;
@@ -154,55 +156,57 @@ const Dashboard = () => {
       age: 4,
       title: "People Problem",
       description: "I got a people problem",
-      assigned_to: "BT",
+      assigned_to: "Chris Giroux",
     },
     {
       age: 4,
       title: "People Problem",
       description: "I got a people problem",
-      assigned_to: "DT",
+      assigned_to: "Brandon Teague",
     },
     {
       age: 4,
       title: "People Problem",
       description: "I got a people problem",
-      assigned_to: "TT",
+      assigned_to: "Scott Harris",
     },
     {
       age: 4,
       title: "People Problem",
       description: "I got a people problem",
-      assigned_to: "XT",
+      assigned_to: "Joe Schmoe",
     },
     {
       age: 4,
       title: "People Problem",
       description: "I got a people problem",
-      assigned_to: "CG",
+      //   assigned_to: "Jana Scheuble",
     },
   ];
   return (
-    <Container>
-      <div className="left">
-        <div className="nav_header">
-          <h1>The Queue</h1>
-        </div>
-        <div className="main">
-          <div className={active.all ? "active" : "main_button"}>
-            <h2 onClick={(e) => choose(e)} id="all">
-              All Tickets
-            </h2>
+    <>
+      <NavBar />
+      <Container>
+        <div className="left">
+          <div className="nav_header">
+            <h1>The Queue</h1>
           </div>
-          <div className={active.my ? "active" : "main_button"}>
-            <h2 onClick={choose} id="my">
-              My Tickets
-            </h2>
+          <div className="main">
+            <div className={active.all ? "active" : "main_button"}>
+              <h2 onClick={(e) => choose(e)} id="all">
+                All Tickets
+              </h2>
+            </div>
+            <div className={active.my ? "active" : "main_button"}>
+              <h2 onClick={choose} id="my">
+                My Tickets
+              </h2>
+            </div>
           </div>
-        </div>
-        <div className="filters">
-          <h3></h3>
-          <Expansion />
-          {/* <select>
+          <div className="filters">
+            <h3></h3>
+            <Expansion />
+            {/* <select>
             <option>Filtered Tickets</option>
             <option>Filtered Tickets</option>
             <option>Filtered Tickets</option>
@@ -236,39 +240,48 @@ const Dashboard = () => {
           <h3></h3>
           <h3></h3>
           <h3></h3> */}
-          <div className="bottom_filter">
-            <h3>Sort Tickets</h3>
+            <div className="bottom_filter">
+              <h3>Sort Tickets</h3>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="middle">
-        {data.map((i, index) => {
-          return (
-            <div className="card">
-              <div className="left">
-                <p>
-                  {i.age}
-                  <br />
-                  days
-                  <br />
-                  old
-                </p>
-              </div>
-              <div className="middle">
-                <h2>{i.title}</h2>
-                <p>{i.description}</p>
-              </div>
-              <div className="right">
-                <div className="circle">
-                  <p>{i.assigned_to}</p>
+        <div className="middle">
+          {data.map((i, index) => {
+            return (
+              <div className="card">
+                <div className="left">
+                  <p>
+                    {i.age}
+                    <br />
+                    days
+                    <br />
+                    old
+                  </p>
+                </div>
+                <div className="middle">
+                  <h2>{i.title}</h2>
+                  <p>{i.description}</p>
+                </div>
+                <div className="right">
+                  {i.assigned_to && (
+                    <div>
+                      <Avatar
+                        style={{ color: "white", fontWeight: "bold" }}
+                        src={i.image}
+                      >{`${i.assigned_to.split(" ")[0][0]}${
+                        i.assigned_to.split(" ")[1][0]
+                      }`}</Avatar>
+                      {/* <p>{i.assigned_to}</p> */}
+                    </div>
+                  )}
                 </div>
               </div>
-            </div>
-          );
-        })}
-      </div>
-      <div className="right"></div>
-    </Container>
+            );
+          })}
+        </div>
+        <div className="right"></div>
+      </Container>
+    </>
   );
 };
 
