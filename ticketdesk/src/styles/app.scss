@@ -4,8 +4,9 @@
 // @import "admin.scss";
 @import "home.scss";
 // @import "tickets.scss";
+@import "expansion.scss";
 
-*{
+* {
   box-sizing: border-box;
 }
 
@@ -17,4 +18,9 @@ body {
   width: 100%;
   background: #f9fafb;
   color: #2e2c48;
+}
+
+.mui-selected {
+  outline: "none";
+  background: red;
 }
