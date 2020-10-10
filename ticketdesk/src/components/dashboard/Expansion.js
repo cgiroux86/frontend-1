@@ -9,6 +9,13 @@ import { Typography } from "@material-ui/core";
 
 const TreeTheme = createMuiTheme({
   overrides: {
+    MuiInputLabel: {
+      root: {
+        color: "black",
+        fontSize: 15,
+        fontWeight: "bold",
+      },
+    },
     MuiSelect: {
       select: {
         "&:focus": {
@@ -50,10 +57,31 @@ export default function MultiSelectTreeView() {
     tech: false,
     personel: false,
   });
+  const [status, setStatus] = useState({
+    not_started: false,
+    in_progress: false,
+    complete: false,
+  });
+
+  const [urgency, setUrgency] = useState({
+    low: false,
+    medium: false,
+    high: false,
+  });
 
   const handleCategoryChange = (e) => {
     let name = e.target.getAttribute("name");
     setCategories({ ...categories, [name]: !categories[name] });
+  };
+
+  const handleStatusChange = (e) => {
+    let name = e.target.getAttribute("name");
+    setStatus({ ...status, [name]: !status[name] });
+  };
+
+  const handleUrgencyChange = (e) => {
+    let name = e.target.getAttribute("name");
+    setUrgency({ ...urgency, [name]: !urgency[name] });
   };
 
   return (
@@ -64,8 +92,22 @@ export default function MultiSelectTreeView() {
         defaultExpandIcon={<ChevronRightIcon />}
         multiSelect
       >
-        <TreeItem nodeId="1" label="Filter Tickets">
-          <TreeItem nodeId="2" label="Categories">
+        <TreeItem
+          nodeId="1"
+          label={
+            <Typography style={{ fontSize: "1.3rem", fontWeight: "bold" }}>
+              Filter Tickets
+            </Typography>
+          }
+        >
+          <TreeItem
+            nodeId="2"
+            label={
+              <Typography style={{ fontSize: "1rem", fontWeight: "bold" }}>
+                Categories
+              </Typography>
+            }
+          >
             <Typography
               name="general"
               onClick={(e) => handleCategoryChange(e)}
@@ -88,16 +130,65 @@ export default function MultiSelectTreeView() {
               Technology
             </Typography>
           </TreeItem>
-          <TreeItem nodeId="6" label="Status">
-            <TreeItem nodeId="7" label="Not Started" />
-            <TreeItem nodeId="8" label="In Progress" />
-            <TreeItem nodeId="9" label="Complete" />
+          <TreeItem
+            nodeId="6"
+            label={
+              <Typography style={{ fontSize: "1rem", fontWeight: "bold" }}>
+                Status
+              </Typography>
+            }
+          >
+            <Typography
+              name="not_started"
+              onClick={(e) => handleStatusChange(e)}
+              className={status.not_started ? classes.active : classes.child}
+            >
+              Not Started
+            </Typography>
+            <Typography
+              name="in_progress"
+              onClick={(e) => handleStatusChange(e)}
+              className={status.in_progress ? classes.active : classes.child}
+            >
+              In Progress
+            </Typography>
+            <Typography
+              name="complete"
+              onClick={(e) => handleStatusChange(e)}
+              className={status.complete ? classes.active : classes.child}
+            >
+              Complete
+            </Typography>
           </TreeItem>
-          <TreeItem nodeId="10" label="Assigned To" />
-          <TreeItem nodeId="11" label="Urgency">
-            <TreeItem nodeId="12" label="Low" />
-            <TreeItem nodeId="13" label="Medium" />
-            <TreeItem nodeId="14" label="High" />
+          <TreeItem
+            nodeId="11"
+            label={
+              <Typography style={{ fontSize: "1rem", fontWeight: "bold" }}>
+                Urgency
+              </Typography>
+            }
+          >
+            <Typography
+              name="low"
+              onClick={(e) => handleUrgencyChange(e)}
+              className={urgency.low ? classes.active : classes.child}
+            >
+              Low
+            </Typography>
+            <Typography
+              name="medium"
+              onClick={(e) => handleUrgencyChange(e)}
+              className={urgency.medium ? classes.active : classes.child}
+            >
+              Medium
+            </Typography>
+            <Typography
+              name="high"
+              onClick={(e) => handleUrgencyChange(e)}
+              className={urgency.high ? classes.active : classes.child}
+            >
+              High
+            </Typography>
           </TreeItem>
         </TreeItem>
       </TreeView>
