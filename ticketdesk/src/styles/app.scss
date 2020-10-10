@@ -1,10 +1,12 @@
 @import "navbar.scss";
 @import "login.scss";
 @import "register.scss";
-// @import "admin.scss";
+@import "landing.scss"; // @import "admin.scss";
 @import "home.scss";
 // @import "tickets.scss";
 @import "expansion.scss";
+@import "card.scss";
+@import "ticket_info.scss";
 
 * {
   box-sizing: border-box;
