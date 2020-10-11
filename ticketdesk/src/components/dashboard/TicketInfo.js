@@ -1,6 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 
 export default function TicketInfo({ ticket }) {
+  const [department, setDepartment] = useState(false);
+  const [priority, setPriority] = useState(false);
+  const toggleAssignDepartment = () => {
+    setDepartment(!department);
+    setPriority(false);
+  };
+  const toggleAssignPriority = () => {
+    setPriority(!priority);
+    setDepartment(false);
+  };
   return (
     <div className="dashboard_right">
       <div className="ticket_info_wrapper">
@@ -13,12 +23,41 @@ export default function TicketInfo({ ticket }) {
         <div>
           <p>Attempted Solutions: {ticket.attempted_solutions}</p>
         </div>
+
         <div>
-          <p>Priority: {ticket.priority || "Not yet assigned"}</p>
+          <div className="department_container">
+            <div className="assign_department">
+              <p>
+                <strong>Priority: </strong>
+                {ticket.priority || " No priority assigned"}
+              </p>
+              <button onClick={toggleAssignPriority}>Assign Priority</button>
+            </div>
+            <div
+              className={
+                priority ? "show_department_dropdown" : "department_dropdown"
+              }
+            ></div>
+          </div>
         </div>
         <div>
           <p>{ticket.assigned_to}</p>
-          <p>Department: {ticket.department || "No department assigned"}</p>
+          <div className="department_container">
+            <div className="assign_department">
+              <p>
+                <strong>Department:</strong>
+                {ticket.department || " No department assigned"}
+              </p>
+              <button onClick={toggleAssignDepartment}>
+                Assign Department
+              </button>
+            </div>
+            <div
+              className={
+                department ? "show_department_dropdown" : "department_dropdown"
+              }
+            ></div>
+          </div>
         </div>
       </div>
       <div className="response_container">
