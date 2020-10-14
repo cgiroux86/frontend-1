@@ -1,9 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Expansion from "./Expansion";
 import NavBar from "../shared/NavBar";
 import Card from "./Card";
 import TicketInfo from "./TicketInfo";
+import CreateTicket from "./CreateTicket";
+import { useRecoilState } from "recoil";
+import { userState } from "../../recoil/userState";
+import axiosWithAuth from "../../utils/axiosWithAuth";
+import { ticketState } from "../../recoil/ticketState";
 
 const Container = styled.div`
   height: 100vh;
@@ -19,11 +24,15 @@ const Container = styled.div`
 
     .nav_header {
       padding: 0 0 0 5%;
+      font-size: 1.5rem;
     }
 
     .main {
       h2 {
         padding: 0 0 0 5%;
+        font-size: 1.8rem;
+        border: 1px solid red;
+        margin: 5% 0;
       }
 
       .active {
@@ -32,6 +41,7 @@ const Container = styled.div`
       }
 
       .main_button {
+        margin: 5% 0;
       }
     }
 
@@ -122,42 +132,42 @@ const Container = styled.div`
   }
 `;
 
-const data = [
-  {
-    age: 4,
-    title: "People Problem",
-    description: "I got a people problem",
-    assigned_to: "Chris Giroux",
-    attempted_solutions:
-      "Apple Genius Bar, clearing cache and reformatting hard drive",
-  },
-  {
-    age: 4,
-    title: "People Problem",
-    description: "I got a people problem",
-    assigned_to: "Brandon Teague",
-  },
-  {
-    age: 4,
-    title: "People Problem",
-    description: "I got a people problem",
-    assigned_to: "Scott Harris",
-    priority: "low",
-  },
-  {
-    age: 4,
-    title: "People Problem",
-    description: "I got a people problem",
-    assigned_to: "Joe Schmoe",
-    priority: "high",
-  },
-  {
-    age: 4,
-    title: "People Problem",
-    description: "I got a people problem",
-    //   assigned_to: "Jana Scheuble",
-  },
-];
+// const data = [
+//   {
+//     age: 4,
+//     title: "People Problem",
+//     description: "I got a people problem",
+//     assigned_to: "Chris Giroux",
+//     attempted_solutions:
+//       "Apple Genius Bar, clearing cache and reformatting hard drive",
+//   },
+//   {
+//     age: 4,
+//     title: "People Problem",
+//     description: "I got a people problem",
+//     assigned_to: "Brandon Teague",
+//   },
+//   {
+//     age: 4,
+//     title: "People Problem",
+//     description: "I got a people problem",
+//     assigned_to: "Scott Harris",
+//     priority: "low",
+//   },
+//   {
+//     age: 4,
+//     title: "People Problem",
+//     description: "I got a people problem",
+//     assigned_to: "Joe Schmoe",
+//     priority: "high",
+//   },
+//   {
+//     age: 4,
+//     title: "People Problem",
+//     description: "I got a people problem",
+//     //   assigned_to: "Jana Scheuble",
+//   },
+// ];
 
 const Dashboard = () => {
   const [active, setActive] = useState({
@@ -165,7 +175,24 @@ const Dashboard = () => {
     my: false,
   });
 
-  const [selectedTicket, setSelectedTicket] = useState(data[0]);
+  const [data, setData] = useRecoilState(ticketState);
+
+  const [user, setUser] = useRecoilState(userState);
+  const [responses, setResponses] = useRecoilState(ticketState);
+
+  const [selectedTicket, setSelectedTicket] = useState([]);
+  const fetchData = () => {
+    axiosWithAuth()
+      .get("/tickets/all")
+      .then((res) =>
+        setData({ ...data, tickets: res.data, selected: res.data[0] })
+      )
+      .catch((err) => console.log(err));
+  };
+  useEffect(() => {
+    fetchData();
+    console.log("data", data);
+  }, []);
 
   const choose = (e) => {
     if (e.target.id === "all") {
@@ -186,33 +213,45 @@ const Dashboard = () => {
       <NavBar />
       <Container>
         <div className="left">
-          <div className="nav_header">
-            <h1>The Queue</h1>
-          </div>
-          <div className="main">
-            <div className={active.all ? "active" : "main_button"}>
-              <h2 onClick={choose} id="all">
-                All Tickets
-              </h2>
+          <div style={{ height: "100%" }}>
+            <div className="nav_header">
+              <h1>The Queue</h1>
             </div>
-            <div className={active.my ? "active" : "main_button"}>
-              <h2 onClick={choose} id="my">
-                My Tickets
-              </h2>
+            <div className="main">
+              <div className={active.all ? "active" : "main_button"}>
+                <h2 onClick={choose} id="all">
+                  All Tickets
+                </h2>
+              </div>
+              <div className={active.my ? "active" : "main_button"}>
+                <h2 onClick={choose} id="my">
+                  My Tickets
+                </h2>
+              </div>
+            </div>
+            <div className="filters">
+              <Expansion />
             </div>
           </div>
-          <div className="filters">
-            <Expansion />
-            <div className="bottom_filter"></div>
-          </div>
+          <CreateTicket fetchData={fetchData} />
         </div>
         <div className="middle">
-          {data.map((item) => {
-            return <Card key={Math.floor(Math.random() * 10000)} info={item} />;
-          })}
+          {data.tickets.length &&
+            data.tickets.map((item) => {
+              return (
+                <Card
+                  fetchData={fetchData}
+                  id={item.ticket_id}
+                  key={Math.floor(Math.random() * 10000)}
+                  info={item}
+                />
+              );
+            })}
         </div>
         <div className="main_right">
-          <TicketInfo ticket={selectedTicket} id={1} />
+          {data.tickets.length && (
+            <TicketInfo ticket={selectedTicket || data.tickets[0]} id={1} />
+          )}
         </div>
       </Container>
     </>
