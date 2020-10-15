@@ -3,6 +3,7 @@ import AxiosWithAuth from "../../utils/axiosWithAuth";
 import { useRecoilState } from "recoil";
 import { ticketState } from "../../recoil/ticketState";
 import Alert from "./Alert";
+import { formatDate } from "../../utils/formatDate";
 
 export default function TicketInfo() {
   const [ticket, setTicket] = useRecoilState(ticketState);
@@ -71,12 +72,17 @@ export default function TicketInfo() {
           <h2>Ticket Title: {ticket.selected.description}</h2>
         </div>
         <div className="ticket_age">
-          <h6>Age of Ticket: {`${ticket.selected.created_at} days old`}</h6>
+          <strong>Age of Ticket: </strong>
+          <p>{` ${formatDate(ticket.selected.created_at)} days old`}</p>
         </div>
-        <div>
-          <p>Attempted Solutions: {ticket.selected.attempted_solutions}</p>
+        <div className="department_container">
+          <div className="assign_department">
+            <p>
+              <strong>Attempted solutions: </strong>
+              {ticket.selected.attempted_solutions || " No priority assigned"}
+            </p>
+          </div>
         </div>
-
         <div>
           <div className="department_container">
             <div className="assign_department">

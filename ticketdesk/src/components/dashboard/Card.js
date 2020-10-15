@@ -4,6 +4,7 @@ import { getPriority } from "../../utils/functions";
 import AxiosWithAuth from "../../utils/axiosWithAuth";
 import { useRecoilState } from "recoil";
 import { ticketState } from "../../recoil/ticketState";
+import { formatDate } from "../../utils/formatDate";
 
 export default function Card({ info, fetchData }) {
   const deleteCard = (id) => {
@@ -23,7 +24,7 @@ export default function Card({ info, fetchData }) {
       <div className={getPriority(info.priority)}></div>
       <div className="age_text">
         <p>
-          {info.created_at}
+          {formatDate(info.created_at)}
           <br />
           days
           <br />

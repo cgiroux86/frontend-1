@@ -9,6 +9,7 @@ import { useRecoilState } from "recoil";
 import axiosWithAuth from "../../utils/axiosWithAuth";
 import { ticketState } from "../../recoil/ticketState";
 import Alert from "./Alert";
+import { formatDate } from "../../utils/formatDate";
 
 const Container = styled.div`
   height: 100vh;
@@ -30,7 +31,7 @@ const Container = styled.div`
     .main {
       h2 {
         padding: 0 0 0 5%;
-        font-size: 1.8rem;
+        font-size: 1.5rem;
         border: 1px solid red;
         margin: 5% 0;
       }
