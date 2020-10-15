@@ -17,6 +17,13 @@
     }
     .ticket_age {
       width: 100%;
+      display: flex;
+      align-items: center;
+
+      p {
+        font-size: 1rem;
+        margin-left: 0.5%;
+      }
     }
     .department_container {
       display: flex;
