@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SimpleModal({ fetchData }) {
+export default function SimpleModal({ fetchData, setSuccess }) {
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = useState(getModalStyle);
@@ -55,7 +55,11 @@ export default function SimpleModal({ fetchData }) {
         aria-describedby="simple-modal-description"
       >
         <div style={modalStyle} className={classes.paper}>
-          <TicketForm fetchData={fetchData} setOpen={setOpen} />
+          <TicketForm
+            setSuccess={setSuccess}
+            fetchData={fetchData}
+            setOpen={setOpen}
+          />
         </div>
       </Modal>
     </div>

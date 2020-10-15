@@ -1,11 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import axiosWithAuth from "../../utils/axiosWithAuth";
 
-export default function TicketForm({ setOpen, fetchData }) {
+export default function TicketForm({ setSuccess, setOpen, fetchData }) {
   const { handleSubmit, register, errors } = useForm();
-
-  const [formInputs, setFormInputs] = useState({});
 
   //   //
   //     "description": "So that's that",
@@ -21,6 +19,7 @@ export default function TicketForm({ setOpen, fetchData }) {
         console.log(res);
         setOpen(false);
         fetchData();
+        setSuccess(true);
       })
       .catch((err) => console.log(err));
   };

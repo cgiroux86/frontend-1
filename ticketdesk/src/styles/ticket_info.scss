@@ -46,9 +46,18 @@
       }
       .show_department_dropdown {
         display: flex;
-        width: 400px;
-        height: 300px;
-        background: grey;
+        flex-direction: column;
+        align-items: center;
+        width: 40%;
+        height: 100%;
+        background: rgb(229, 229, 229);
+        div {
+          border: 1px solid black;
+          width: 90%;
+          display: flex;
+          margin: 1% auto;
+          text-align: center;
+        }
       }
     }
   }
@@ -98,4 +107,10 @@
 .main_right {
   height: 100%;
   width: 50%;
+}
+.alert {
+  display: block;
+}
+.dont_show {
+  display: none;
 }
