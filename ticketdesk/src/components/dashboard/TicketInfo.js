@@ -2,24 +2,33 @@ import React, { useState, useEffect } from "react";
 import AxiosWithAuth from "../../utils/axiosWithAuth";
 import { useRecoilState } from "recoil";
 import { ticketState } from "../../recoil/ticketState";
+import Alert from "./Alert";
 
 export default function TicketInfo() {
   const [ticket, setTicket] = useRecoilState(ticketState);
   const [department, setDepartment] = useState(false);
   const [priority, setPriority] = useState(false);
   const [response, setResponse] = useState("");
+  const [assigned, setAssigned] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [dropDownState, setDropDownState] = useState({
+    priority: ["Low", "Medium", "High"],
+    assigned: [],
+    department: ["Human Resources", "Accounting", "IT", "Marketing"],
+  });
 
   const toggleAssignDepartment = () => {
     setDepartment(!department);
-    setPriority(false);
   };
   const toggleAssignPriority = () => {
     setPriority(!priority);
-    setDepartment(false);
   };
   const handleResponse = (e) => {
     setResponse(e.target.value);
-    console.log(response);
+  };
+
+  const toggleAssignRole = () => {
+    setAssigned(!assigned);
   };
 
   const fetchResponses = (id) => {
@@ -33,6 +42,14 @@ export default function TicketInfo() {
     ticket.selected && fetchResponses(ticket.selected.ticket_id);
   }, [ticket.selected]);
 
+  useEffect(() => {
+    AxiosWithAuth()
+      .get("/users")
+      .then((res) => {
+        setDropDownState({ ...dropDownState, assigned: res.data });
+      });
+  }, []);
+
   const submitResponse = (e) => {
     e.preventDefault();
     AxiosWithAuth()
@@ -41,8 +58,8 @@ export default function TicketInfo() {
         ticket_id: ticket.selected.ticket_id,
       })
       .then((res) => {
-        console.log(res);
         fetchResponses(ticket.selected.ticket_id);
+        setSuccess(true);
       })
       .catch((err) => console.log(err));
   };
@@ -65,7 +82,7 @@ export default function TicketInfo() {
             <div className="assign_department">
               <p>
                 <strong>Priority: </strong>
-                {ticket.priority || " No priority assigned"}
+                {ticket.selected.priority || " No priority assigned"}
               </p>
               <button onClick={toggleAssignPriority}>Assign Priority</button>
             </div>
@@ -73,21 +90,43 @@ export default function TicketInfo() {
               className={
                 priority ? "show_department_dropdown" : "department_dropdown"
               }
-            ></div>
+            >
+              {dropDownState.priority.length > 0 &&
+                dropDownState.priority.map((p) => {
+                  return <div key={Math.random() * 10000}>{p}</div>;
+                })}
+            </div>
           </div>
         </div>
         <div>
-          <p>
-            <strong>Assigned: </strong>
-            {ticket.assigned_first
-              ? `${ticket.selected.assigned_first} ${ticket.selected.assigned_last}`
-              : "Not yet assigned"}
-          </p>
+          <div className="department_container">
+            <div className="assign_department">
+              <p>
+                <strong>Assigned: </strong>
+                {ticket.selected.priority || " No priority assigned"}
+              </p>
+              <button onClick={toggleAssignRole}>Assign Priority</button>
+            </div>
+            <div
+              className={
+                assigned ? "show_department_dropdown" : "department_dropdown"
+              }
+            >
+              {dropDownState.assigned.length > 0 &&
+                dropDownState.assigned.map((member) => {
+                  return (
+                    <div
+                      key={Math.random() * 10000}
+                    >{`${member.first_name} ${member.last_name}`}</div>
+                  );
+                })}
+            </div>
+          </div>
           <div className="department_container">
             <div className="assign_department">
               <p>
                 <strong>Department:</strong>
-                {ticket.department || " No department assigned"}
+                {ticket.selected.department || " No department assigned"}
               </p>
               <button onClick={toggleAssignDepartment}>
                 Assign Department
@@ -97,7 +136,15 @@ export default function TicketInfo() {
               className={
                 department ? "show_department_dropdown" : "department_dropdown"
               }
-            ></div>
+            >
+              {dropDownState.department.length > 0 &&
+                dropDownState.department.map((dept) => {
+                  return <div key={Math.random() * 10000}>{dept}</div>;
+                })}
+            </div>
+          </div>
+          <div className={success ? "alert" : "dont_show"}>
+            <Alert setSuccess={setSuccess} />
           </div>
         </div>
       </div>

@@ -6,9 +6,9 @@ import Card from "./Card";
 import TicketInfo from "./TicketInfo";
 import CreateTicket from "./CreateTicket";
 import { useRecoilState } from "recoil";
-import { userState } from "../../recoil/userState";
 import axiosWithAuth from "../../utils/axiosWithAuth";
 import { ticketState } from "../../recoil/ticketState";
+import Alert from "./Alert";
 
 const Container = styled.div`
   height: 100vh;
@@ -132,43 +132,6 @@ const Container = styled.div`
   }
 `;
 
-// const data = [
-//   {
-//     age: 4,
-//     title: "People Problem",
-//     description: "I got a people problem",
-//     assigned_to: "Chris Giroux",
-//     attempted_solutions:
-//       "Apple Genius Bar, clearing cache and reformatting hard drive",
-//   },
-//   {
-//     age: 4,
-//     title: "People Problem",
-//     description: "I got a people problem",
-//     assigned_to: "Brandon Teague",
-//   },
-//   {
-//     age: 4,
-//     title: "People Problem",
-//     description: "I got a people problem",
-//     assigned_to: "Scott Harris",
-//     priority: "low",
-//   },
-//   {
-//     age: 4,
-//     title: "People Problem",
-//     description: "I got a people problem",
-//     assigned_to: "Joe Schmoe",
-//     priority: "high",
-//   },
-//   {
-//     age: 4,
-//     title: "People Problem",
-//     description: "I got a people problem",
-//     //   assigned_to: "Jana Scheuble",
-//   },
-// ];
-
 const Dashboard = () => {
   const [active, setActive] = useState({
     all: true,
@@ -177,10 +140,11 @@ const Dashboard = () => {
 
   const [data, setData] = useRecoilState(ticketState);
 
-  const [user, setUser] = useRecoilState(userState);
-  const [responses, setResponses] = useRecoilState(ticketState);
+  // const [user, setUser] = useRecoilState(userState);
+  // const [responses, setResponses] = useRecoilState(ticketState);
+  const [success, setSuccess] = useState(false);
 
-  const [selectedTicket, setSelectedTicket] = useState([]);
+  const [selectedTicket] = useState([]);
   const fetchData = () => {
     axiosWithAuth()
       .get("/tickets/all")
@@ -191,7 +155,6 @@ const Dashboard = () => {
   };
   useEffect(() => {
     fetchData();
-    console.log("data", data);
   }, []);
 
   const choose = (e) => {
@@ -233,9 +196,21 @@ const Dashboard = () => {
               <Expansion />
             </div>
           </div>
-          <CreateTicket fetchData={fetchData} />
+          <CreateTicket setSuccess={setSuccess} fetchData={fetchData} />
         </div>
         <div className="middle">
+          <div
+            style={{
+              width: "80%",
+              margin: "0 auto",
+              position: "relative",
+              right: "13%",
+              top: "1%",
+            }}
+            className={success ? "alert" : "dont_show"}
+          >
+            <Alert setSuccess={setSuccess} />
+          </div>
           {data.tickets.length &&
             data.tickets.map((item) => {
               return (
