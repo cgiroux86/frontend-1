@@ -4,6 +4,8 @@ import { useRecoilState } from "recoil";
 import { ticketState } from "../../recoil/ticketState";
 import Alert from "./Alert";
 import { formatDate } from "../../utils/formatDate";
+import Responses from "./Responses";
+import DropDown from "./Dropdown";
 
 export default function TicketInfo() {
   const [ticket, setTicket] = useRecoilState(ticketState);
@@ -39,21 +41,63 @@ export default function TicketInfo() {
       .catch((err) => console.log(err));
   };
 
-  useEffect(() => {
-    ticket.selected && fetchResponses(ticket.selected.ticket_id);
-  }, [ticket.selected]);
+  const fetchAllTickets = () => {
+    AxiosWithAuth()
+      .get("/tickets")
+      .then((res) => setTicket({ ...ticket, tickets: res.data }))
+      .catch((err) => console.log(err));
+  };
+
+  const submitTicketUpdates = () => {
+    const updates = {
+      priority: ticket.selected.priority
+        ? ticket.selected.priority.toUpperCase()
+        : null,
+      assigned_to: ticket.selected.assigned_to,
+    };
+    AxiosWithAuth()
+      .put(`/tickets/${ticket.selected.ticket_id}/update`, updates)
+      .then((res) => {
+        setTicket({
+          ...ticket,
+          tickets: res.data.tickets,
+          selected: res.data.updated.ticket,
+        });
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const hanldePriorityChange = (priority) => {
+    setTicket({ ...ticket, selected: { ...ticket.selected, priority } });
+  };
+
+  const assignMemberRole = (member) => {
+    console.log("MEMBER", member);
+    setTicket({
+      ...ticket,
+      selected: {
+        ...ticket.selected,
+        assigned_to: member.id,
+        assigned_first: member.first_name,
+        assigned_last: member.last_name,
+      },
+    });
+    console.log("TICKET", ticket);
+  };
 
   useEffect(() => {
     AxiosWithAuth()
       .get("/users")
       .then((res) => {
-        setDropDownState({ ...dropDownState, assigned: res.data });
+        console.log(res);
+        setTicket({ ...ticket, assigned: res.data });
       });
   }, []);
 
   const submitResponse = (e) => {
     e.preventDefault();
     AxiosWithAuth()
+      /////////
       .post(`/tickets/${ticket.selected.ticket_id}/responses`, {
         message: response,
         ticket_id: ticket.selected.ticket_id,
@@ -61,6 +105,7 @@ export default function TicketInfo() {
       .then((res) => {
         fetchResponses(ticket.selected.ticket_id);
         setSuccess(true);
+        setResponse("");
       })
       .catch((err) => console.log(err));
   };
@@ -83,7 +128,16 @@ export default function TicketInfo() {
             </p>
           </div>
         </div>
+        <div className="department_container">
+          <div className="assign_department">
+            <p>
+              <strong>More info: </strong>
+              {ticket.selected.more_info || " N/A"}
+            </p>
+          </div>
+        </div>
         <div>
+          <DropDown name="priority" />
           <div className="department_container">
             <div className="assign_department">
               <p>
@@ -97,31 +151,42 @@ export default function TicketInfo() {
                 priority ? "show_department_dropdown" : "department_dropdown"
               }
             >
-              {dropDownState.priority.length > 0 &&
-                dropDownState.priority.map((p) => {
-                  return <div key={Math.random() * 10000}>{p}</div>;
+              {ticket.priority.length > 0 &&
+                ticket.priority.map((p) => {
+                  return (
+                    <div
+                      onClick={() => hanldePriorityChange(p)}
+                      key={Math.random() * 10000}
+                    >
+                      {p}
+                    </div>
+                  );
                 })}
             </div>
           </div>
         </div>
         <div>
+          <DropDown name="Assigned" />
           <div className="department_container">
             <div className="assign_department">
               <p>
                 <strong>Assigned: </strong>
-                {ticket.selected.priority || " No priority assigned"}
+                {ticket.selected.assigned_first
+                  ? `${ticket.selected.assigned_first} ${ticket.selected.assigned_last}`
+                  : " Not yet assigned"}
               </p>
-              <button onClick={toggleAssignRole}>Assign Priority</button>
+              <button onClick={toggleAssignRole}>Assign Now</button>
             </div>
             <div
               className={
                 assigned ? "show_department_dropdown" : "department_dropdown"
               }
             >
-              {dropDownState.assigned.length > 0 &&
-                dropDownState.assigned.map((member) => {
+              {ticket.assigned.length > 0 &&
+                ticket.assigned.map((member) => {
                   return (
                     <div
+                      onClick={() => assignMemberRole(member)}
                       key={Math.random() * 10000}
                     >{`${member.first_name} ${member.last_name}`}</div>
                   );
@@ -153,6 +218,7 @@ export default function TicketInfo() {
             <Alert setSuccess={setSuccess} />
           </div>
         </div>
+        <button onClick={submitTicketUpdates}>Submit Changes</button>
       </div>
       <div className="response_container">
         <div className="ticket_response_wrapper">
@@ -160,19 +226,14 @@ export default function TicketInfo() {
           <textarea
             onChange={handleResponse}
             className="ticket_text"
+            value={response}
           ></textarea>
         </div>
         <div>
           <button onClick={submitResponse}>Submit Response</button>
         </div>
       </div>
-      <div>
-        <h3>Responses</h3>
-        {ticket.responses.length > 0 &&
-          ticket.responses.map((res, idx) => {
-            return <div key={idx}>{res.message}</div>;
-          })}
-      </div>
+      <Responses />
     </div>
   );
 }

@@ -13,6 +13,7 @@ function getModalStyle() {
     top: `${top}%`,
     left: `${left}%`,
     transform: `translate(-${top}%, -${left}%)`,
+    height: "60%",
   };
 }
 
@@ -30,7 +31,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SimpleModal({ fetchData, setSuccess }) {
   const classes = useStyles();
-  // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);
 
@@ -44,8 +44,8 @@ export default function SimpleModal({ fetchData, setSuccess }) {
 
   return (
     <div className="create_ticket">
-      <div className="modal_button_container">
-        <FontAwesomeIcon onClick={handleOpen} icon={faPlusCircle} />
+      <div onClick={handleOpen} className="modal_button_container">
+        <FontAwesomeIcon className="modal_button" icon={faPlusCircle} />
         Create Ticket
       </div>
       <Modal

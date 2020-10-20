@@ -3,6 +3,5 @@ export function formatDate(date) {
   let today = Date.now();
   let diff = (today - d) / 1000;
   diff = diff / (60 * 60) / 24;
-  console.log(diff);
   return Math.floor(diff);
 }

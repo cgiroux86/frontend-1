@@ -1,10 +1,10 @@
 export function getPriority(priority) {
   switch (priority) {
-    case "high":
+    case "HIGH":
       return "high_priority";
-    case "medium":
+    case "MEDIUM":
       return "medium_priority";
-    case "low":
+    case "LOW":
       return "low_priority";
     default:
       return "no_priority";

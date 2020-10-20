@@ -36,7 +36,7 @@ const Login = ({ history }) => {
           email: res.data.email,
         };
         setUser(userData);
-        console.log(userData, user);
+
         history.push("/dashboard");
       })
       .catch((err) => {

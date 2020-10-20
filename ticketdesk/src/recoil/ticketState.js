@@ -5,8 +5,11 @@ export const ticketState = atom({
   default: {
     tickets: [],
     responses: [],
+    priority: ["Low", "Medium", "High"],
+    assigned: [],
+    department: ["Human Resources", "Accounting", "IT", "Marketing"],
     selected: {
-      id: null,
+      ticket_id: null,
       description: null,
       attempted_solutions: null,
       submitted_by: 4,

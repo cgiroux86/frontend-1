@@ -1,0 +1,15 @@
+.response_container {
+  height: 100%;
+  overflow: auto;
+  .response_avatar {
+    display: flex;
+    align-items: center;
+    width: 22%;
+    justify-content: space-between;
+  }
+  .response_even {
+  }
+  .response_odd {
+    background: rgb(241, 241, 241);
+  }
+}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Avatar } from "@material-ui/core";
 import { getPriority } from "../../utils/functions";
 import AxiosWithAuth from "../../utils/axiosWithAuth";
@@ -10,15 +10,22 @@ export default function Card({ info, fetchData }) {
   const deleteCard = (id) => {
     AxiosWithAuth()
       .delete(`/tickets/${id}`)
-      .then((res) => fetchData())
+      .then((res) => {
+        console.log("THIS IS ALL", res.data);
+        setTicket({
+          ...ticket,
+          tickets: res.data,
+          selected: res.data[0] || {},
+        });
+      })
       .catch((err) => console.log(err));
   };
 
-  const setCardAsMain = () => {
-    setTicket({ ...ticket, selected: info, responses: [] });
-  };
-
   const [ticket, setTicket] = useRecoilState(ticketState);
+  const setCardAsMain = () => {
+    setTicket({ ...ticket, selected: info });
+    console.log("INFO IN CARD", info, ticket);
+  };
   return (
     <div onClick={setCardAsMain} className="card">
       <div className={getPriority(info.priority)}></div>
