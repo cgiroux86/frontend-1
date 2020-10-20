@@ -23,8 +23,7 @@ export default function Card({ info, fetchData }) {
 
   const [ticket, setTicket] = useRecoilState(ticketState);
   const setCardAsMain = () => {
-    setTicket({ ...ticket, selected: info });
-    console.log("INFO IN CARD", info, ticket);
+    setTicket({ ...ticket, selected: info, responses: [] });
   };
   return (
     <div onClick={setCardAsMain} className="card">

@@ -82,7 +82,6 @@ export default function TicketInfo() {
         assigned_last: member.last_name,
       },
     });
-    console.log("TICKET", ticket);
   };
 
   useEffect(() => {
@@ -93,6 +92,10 @@ export default function TicketInfo() {
         setTicket({ ...ticket, assigned: res.data });
       });
   }, []);
+
+  useEffect(() => {
+    fetchResponses(ticket.selected.ticket_id);
+  }, [ticket.selected]);
 
   const submitResponse = (e) => {
     e.preventDefault();
