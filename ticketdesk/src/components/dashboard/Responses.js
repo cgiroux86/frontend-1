@@ -1,19 +1,16 @@
-import { faRProject } from "@fortawesome/free-brands-svg-icons";
 import { Avatar } from "@material-ui/core";
 import React from "react";
-import { useRecoilValue } from "recoil";
-import { ticketState } from "../../recoil/ticketState";
-
+import { useSelector } from "react-redux";
 export default function Responses() {
-  const ticket = useRecoilValue(ticketState);
+  const ticket = useSelector((state) => state.Tickets);
   return (
     <div className="response_container">
       <h3>Responses</h3>
       <div>
-        {ticket.responses.responses &&
-          ticket.responses.responses.length > 0 &&
-          ticket.responses.responses.map((res, idx) => {
-            console.log(res);
+        {ticket.selected &&
+          ticket.selected.responses &&
+          ticket.selected.responses.length > 0 &&
+          ticket.selected.responses.map((res, idx) => {
             return (
               <div
                 className={idx % 2 ? "response_odd" : "response_even"}

@@ -4,10 +4,14 @@ import NavBar from "../shared/NavBar";
 import Card from "./Card";
 import TicketInfo from "./TicketInfo";
 import CreateTicket from "./CreateTicket";
-import { useRecoilState } from "recoil";
 import axiosWithAuth from "../../utils/axiosWithAuth";
-import { ticketState } from "../../recoil/ticketState";
+import { useSelector, useDispatch } from "react-redux";
 import Alert from "./Alert";
+import {
+  fetchAllTickets,
+  setSelectedTicket,
+} from "../../redux/actions/ticketActions";
+import { setAllUsers } from "../../redux/actions/userActions";
 
 const Dashboard = () => {
   const [active, setActive] = useState({
@@ -15,21 +19,39 @@ const Dashboard = () => {
     my: false,
   });
 
-  const [data, setData] = useRecoilState(ticketState);
   const [success, setSuccess] = useState(false);
   const [selectedTicket] = useState([]);
+  const data = useSelector((state) => state.Tickets);
+  const users = useSelector((state) => state.Users);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log("THIS IS SELECTOR", users, data);
+  }, [users]);
 
   const fetchData = () => {
     axiosWithAuth()
       .get("/tickets/all")
-      .then((res) =>
-        setData({ ...data, tickets: res.data, selected: res.data[0] })
-      )
+      .then((res) => {
+        dispatch(fetchAllTickets(res.data));
+        dispatch(setSelectedTicket(res.data[0]));
+      })
+
       .catch((err) => console.log(err));
+  };
+
+  const fetchUsers = () => {
+    axiosWithAuth()
+      .get("/users")
+      .then((res) => {
+        console.log("FETCH USERS", res);
+        dispatch(setAllUsers(res.data));
+      });
   };
 
   useEffect(() => {
     fetchData();
+    fetchUsers();
   }, []);
 
   const choose = (e) => {
@@ -86,7 +108,8 @@ const Dashboard = () => {
           >
             <Alert setSuccess={setSuccess} />
           </div>
-          {data.tickets.length > 0 &&
+          {data &&
+            data.tickets.length > 0 &&
             data.tickets.map((item) => {
               return (
                 <Card

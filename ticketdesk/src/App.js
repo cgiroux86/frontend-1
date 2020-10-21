@@ -8,14 +8,8 @@ import "./utils/axiosDefaults";
 import Dashboard from "./components/dashboard";
 import Expansion from "./components/dashboard/Expansion";
 import PrivateRoute from "./utils/privateRoute";
-import { useRecoilValue } from "recoil";
-import { ticketState } from "./recoil/ticketState";
 
 function App() {
-  const ticket = useRecoilValue(ticketState);
-  useEffect(() => {
-    console.log("THIS IS YOUR TICKET CHANGE", ticket);
-  }, [ticket]);
   return (
     <div className="App">
       <Router>

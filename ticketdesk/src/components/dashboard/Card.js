@@ -2,28 +2,29 @@ import React, { useEffect } from "react";
 import { Avatar } from "@material-ui/core";
 import { getPriority } from "../../utils/functions";
 import AxiosWithAuth from "../../utils/axiosWithAuth";
-import { useRecoilState } from "recoil";
-import { ticketState } from "../../recoil/ticketState";
 import { formatDate } from "../../utils/formatDate";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  fetchAllTickets,
+  setSelectedTicket,
+} from "../../redux/actions/ticketActions";
 
 export default function Card({ info, fetchData }) {
   const deleteCard = (id) => {
     AxiosWithAuth()
       .delete(`/tickets/${id}`)
       .then((res) => {
-        console.log("THIS IS ALL", res.data);
-        setTicket({
-          ...ticket,
-          tickets: res.data,
-          selected: res.data[0] || {},
-        });
+        dispatch(fetchAllTickets(res.data));
+        dispatch(setSelectedTicket(res.data[0] || {}));
       })
       .catch((err) => console.log(err));
   };
 
-  const [ticket, setTicket] = useRecoilState(ticketState);
+  const ticket = useSelector((state) => state.Tickets);
+  const dispatch = useDispatch();
   const setCardAsMain = () => {
-    setTicket({ ...ticket, selected: info, responses: [] });
+    ticket.selected.ticket_id !== info.ticket_id &&
+      dispatch(setSelectedTicket(info));
   };
   return (
     <div onClick={setCardAsMain} className="card">

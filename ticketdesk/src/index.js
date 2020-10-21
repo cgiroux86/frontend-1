@@ -4,11 +4,13 @@ import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { RecoilRoot } from "recoil";
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
 
 ReactDOM.render(
-  <RecoilRoot>
+  <Provider store={store}>
     <App />
-  </RecoilRoot>,
+  </Provider>,
   document.getElementById("root")
 );
 
