@@ -55,7 +55,6 @@ export function sortFilterTickets(...args) {
   }
   if (args[1] === "filter") {
     const filtered = args[0].filter((ticket) => {
-      console.log(ticket[args[3]]);
       return ticket[args[3]] === args[2];
     });
     return filtered;

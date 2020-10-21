@@ -5,14 +5,15 @@ import GoogleLogin from "react-google-login";
 import FacebookLogin from "react-facebook-login";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook } from "@fortawesome/free-brands-svg-icons";
-// import { userState } from "../../recoil/userState";
-// import { useRecoilState } from "recoil";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../../redux/actions/userActions";
 
 const Login = ({ history }) => {
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
   });
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     setCredentials({
@@ -26,15 +27,16 @@ const Login = ({ history }) => {
     axios
       .post("/auth/login", credentials)
       .then((res) => {
+        console.log("LOGIN", res);
         localStorage.setItem("token", res.data.token);
         const userData = {
           id: res.data.id,
           first_name: res.data.first_name,
           last_name: res.data.last_name,
           email: res.data.email,
+          admin: res.data.admin,
         };
-        // setUser(userData);
-
+        dispatch(loginUser(userData));
         history.push("/dashboard");
       })
       .catch((err) => {

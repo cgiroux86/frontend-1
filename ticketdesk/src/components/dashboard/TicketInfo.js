@@ -61,15 +61,6 @@ export default function TicketInfo() {
             responses: res.data.updated.responses,
           })
         );
-        // setTicket((ticket) => {
-        //   console.log("TICKET SET TICKET", ticket);
-        //   return {
-        //     ...ticket,
-        //     tickets: res.data.tickets,
-        //     selected: res.data.updated[0],
-        //   };
-        // });
-        // fetchResponses(ticket.selected.ticket_id);
 
         setSuccess(true);
         setResponse("");
@@ -125,9 +116,6 @@ export default function TicketInfo() {
             <div className="assign_department">
               <p>
                 <strong>Assigned: </strong>
-                {/* {ticket.selected.assigned_first
-                  ? `${ticket.selected.assigned_first} ${ticket.selected.assigned_last}`
-                  : " Not yet assigned"} */}
               </p>
               <DropDown name="Assigned" />
             </div>
@@ -173,7 +161,9 @@ export default function TicketInfo() {
           <button onClick={submitResponse}>Submit Response</button>
         </div>
       </div>
-      <Responses />
+      <div style={{ height: "100%" }}>
+        <Responses />
+      </div>
     </div>
   );
 }
