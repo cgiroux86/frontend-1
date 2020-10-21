@@ -27,10 +27,6 @@ export default function SimpleSelect({ name }) {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    console.log(state, "USERS IN DROPDOWN");
-  }, [state]);
-
   return (
     <>
       {name === "priority" ? (
@@ -48,16 +44,7 @@ export default function SimpleSelect({ name }) {
                     key={index}
                     value={item.toUpperCase()}
                     onClick={() => {
-                      console.log("ITEM", item);
                       dispatch(updatePriority(item.toUpperCase()));
-                      // setTicket({
-                      //   ...ticket,
-                      //   selected: {
-                      //     ...ticket.selected,
-                      //     priority: ticket.priority[index].toUpperCase(),
-                      //   },
-                      // });
-                      // setInput(item);
                     }}
                   >
                     {item}
@@ -69,9 +56,7 @@ export default function SimpleSelect({ name }) {
         </div>
       ) : (
         <div>
-          {/* {ticket.assigned.length > 0 && ( */}
           <FormControl className={classes.formControl}>
-            {/* <InputLabel id="demo-simple-select-label">{name}</InputLabel> */}
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
@@ -100,7 +85,6 @@ export default function SimpleSelect({ name }) {
                 })}
             </Select>
           </FormControl>
-          {/* )} */}
         </div>
       )}
     </>

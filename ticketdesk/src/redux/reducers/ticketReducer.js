@@ -27,7 +27,6 @@ const initialState = {
 };
 
 export const ticketReducer = (state = initialState, { type, payload }) => {
-  console.log("TICKET PAYLOAD", payload);
   switch (type) {
     case SET_SELECTED_TICKET:
       return {

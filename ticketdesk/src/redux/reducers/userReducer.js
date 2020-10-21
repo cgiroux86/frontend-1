@@ -9,7 +9,6 @@ const initialState = {
 };
 
 export const userReducer = (state = initialState, { type, payload }) => {
-  console.log("REDUX PAYLOAD", payload);
   switch (type) {
     case SET_ALL_USERS:
       return {

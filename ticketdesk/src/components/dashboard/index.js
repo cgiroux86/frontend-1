@@ -22,12 +22,7 @@ const Dashboard = () => {
   const [success, setSuccess] = useState(false);
   const [selectedTicket] = useState([]);
   const data = useSelector((state) => state.Tickets);
-  const users = useSelector((state) => state.Users);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    console.log("THIS IS SELECTOR", users, data);
-  }, [users]);
 
   const fetchData = () => {
     axiosWithAuth()
@@ -44,7 +39,6 @@ const Dashboard = () => {
     axiosWithAuth()
       .get("/users")
       .then((res) => {
-        console.log("FETCH USERS", res);
         dispatch(setAllUsers(res.data));
       });
   };

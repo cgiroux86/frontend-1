@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import AxiosWithAuth from "../../utils/axiosWithAuth";
 import Alert from "./Alert";
 import { formatDate } from "../../utils/formatDate";
@@ -24,10 +24,6 @@ export default function TicketInfo() {
   const users = useSelector((state) => state.Users);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    console.log("THIS IS TICKETINFO SELECTOR", users);
-  }, [users, ticket]);
-
   const toggleAssignDepartment = () => {
     setDepartment(!department);
   };
@@ -45,7 +41,6 @@ export default function TicketInfo() {
     AxiosWithAuth()
       .put(`/tickets/${ticket.selected.ticket_id}/update`, updates)
       .then((res) => {
-        console.log(res, "TICKET RESPONSES");
         dispatch(fetchAllTickets(res.data.tickets));
         dispatch(setSelectedTicket(res.data.updated));
       })
@@ -60,7 +55,6 @@ export default function TicketInfo() {
         ticket_id: ticket.selected.ticket_id,
       })
       .then((res) => {
-        console.log("RESPONSE IN SUBMIT", res.data.updated.responses);
         dispatch(
           updateTicketResponses({
             data: res.data.tickets,

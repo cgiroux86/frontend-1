@@ -6,6 +6,17 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import TreeItem from "@material-ui/lab/TreeItem";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  sortFilterTickets,
+  resetSelectedState,
+  shouldDisplayButton,
+} from "../../utils/functions";
+import {
+  fetchAllTickets,
+  setSelectedTicket,
+} from "../../redux/actions/ticketActions";
+import AxiosWithAuth from "../../utils/axiosWithAuth";
 
 const TreeTheme = createMuiTheme({
   overrides: {
@@ -52,6 +63,8 @@ const useStyles = makeStyles({
 
 export default function MultiSelectTreeView() {
   const classes = useStyles();
+  const tickets = useSelector((state) => state.Tickets.tickets);
+  const dispatch = useDispatch();
   const [categories, setCategories] = useState({
     general: false,
     tech: false,
@@ -74,6 +87,47 @@ export default function MultiSelectTreeView() {
     urgency: false,
     category: false,
   });
+
+  const handleSubmit = () => {
+    const [sorted] = Object.entries(sortItems).filter((item) => item[1]);
+    const filterCategories = Object.entries(categories).filter(
+      (item) => item[1]
+    );
+    const filteredStatus = Object.entries(status).filter((item) => item[1]);
+    const [filteredUrgency] = Object.entries(urgency).filter((item) => item[1]);
+    let updated_tickets;
+    if (sorted && sorted.length) {
+      updated_tickets = sortFilterTickets(tickets, "sort", sorted[0]);
+    }
+    if (filteredUrgency && filteredUrgency.length) {
+      updated_tickets = sortFilterTickets(
+        tickets,
+        "filter",
+        filteredUrgency[0].toUpperCase(),
+        "priority"
+      );
+    }
+    if (filteredStatus && filteredStatus.length) {
+      updated_tickets = sortFilterTickets(
+        tickets,
+        "filter",
+        filteredStatus[0],
+        "status"
+      );
+    }
+    dispatch(fetchAllTickets(updated_tickets));
+    dispatch(setSelectedTicket(updated_tickets[0]));
+  };
+
+  const resetTickets = () => {
+    AxiosWithAuth()
+      .get("/tickets/all")
+      .then((res) => {
+        dispatch(fetchAllTickets(res.data));
+        dispatch(setSelectedTicket(res.data[0]));
+        resetSelectedState(setSortItems, setUrgency, setStatus);
+      });
+  };
 
   const handleCategoryChange = (e) => {
     let name = e.target.getAttribute("name");
@@ -233,6 +287,28 @@ export default function MultiSelectTreeView() {
           </Typography>
         </TreeItem>
       </TreeView>
+      <div
+        style={{
+          margin: "20% 0",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          width: "100%",
+          height: "100%",
+          justifyContent: "space-between",
+        }}
+      >
+        <div className="sort_filter">
+          {shouldDisplayButton(sortItems, urgency, status) && (
+            <button onClick={handleSubmit}>Sort/Filter Tickets</button>
+          )}
+        </div>
+        <div className="reset_tickets" style={{ margin: "10% 0" }}>
+          {shouldDisplayButton(sortItems, urgency, status) && (
+            <button onClick={resetTickets}>Reset Tickets</button>
+          )}
+        </div>
+      </div>
     </MuiThemeProvider>
   );
 }
