@@ -3,11 +3,13 @@
 @import "register.scss";
 @import "landing.scss"; // @import "admin.scss";
 @import "home.scss";
-// @import "tickets.scss";
+@import "ticket_form.scss";
 @import "expansion.scss";
 @import "card.scss";
 @import "ticket_info.scss";
 @import "createTicket.scss";
+@import "dashboard.scss";
+@import "responses.scss";
 * {
   box-sizing: border-box;
 }

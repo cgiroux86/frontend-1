@@ -1,137 +1,17 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
 import Expansion from "./Expansion";
 import NavBar from "../shared/NavBar";
 import Card from "./Card";
 import TicketInfo from "./TicketInfo";
 import CreateTicket from "./CreateTicket";
-import { useRecoilState } from "recoil";
 import axiosWithAuth from "../../utils/axiosWithAuth";
-import { ticketState } from "../../recoil/ticketState";
+import { useSelector, useDispatch } from "react-redux";
 import Alert from "./Alert";
-import { formatDate } from "../../utils/formatDate";
-
-const Container = styled.div`
-  height: 100vh;
-  width: 100%;
-  display: flex;
-
-  .left {
-    height: 100vh;
-    width: 15%;
-    background: white;
-    display: flex;
-    flex-direction: column;
-
-    .nav_header {
-      padding: 0 0 0 5%;
-      font-size: 1.5rem;
-    }
-
-    .main {
-      h2 {
-        padding: 0 0 0 5%;
-        font-size: 1.5rem;
-        border: 1px solid red;
-        margin: 5% 0;
-      }
-
-      .active {
-        background: lightblue;
-        border-left: 4px solid blue;
-      }
-
-      .main_button {
-        margin: 5% 0;
-      }
-    }
-
-    .filters {
-      padding: 0 0 0 5%;
-      display: flex;
-      flex-direction: column;
-
-      select {
-        margin: 4px 0;
-        border: none;
-      }
-
-      .bottom_filter {
-      }
-    }
-  }
-
-  .middle {
-    width: 60%;
-    height: 100%;
-    display: flex;
-    padding-left: 3%;
-    flex-direction: column;
-
-
-      .left {
-        width: 15%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        p {
-          font-size: 1.2rem;
-          text-align: center;
-          margin: 0;
-        }
-      }
-
-      .middle {
-        width: 70%;
-        height: 100%;
-
-        h2 {
-          margin: 0;
-          padding: 0;
-          border: none;
-        }
-
-        p {
-          margin: 0;
-          padding: 0;
-          border: none;
-        }
-      }
-
-      .right {
-        width: 15%;
-        height: 100%;
-
-        p {
-        }
-      }
-    }
-  }
-
-  .right {
-    height: 100%;
-    width: 30%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    .circle {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: black;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      p {
-        color: white;
-      }
-    }
-  }
-`;
+import {
+  fetchAllTickets,
+  setSelectedTicket,
+} from "../../redux/actions/ticketActions";
+import { setAllUsers } from "../../redux/actions/userActions";
 
 const Dashboard = () => {
   const [active, setActive] = useState({
@@ -139,23 +19,33 @@ const Dashboard = () => {
     my: false,
   });
 
-  const [data, setData] = useRecoilState(ticketState);
-
-  // const [user, setUser] = useRecoilState(userState);
-  // const [responses, setResponses] = useRecoilState(ticketState);
   const [success, setSuccess] = useState(false);
-
   const [selectedTicket] = useState([]);
+  const data = useSelector((state) => state.Tickets);
+  const dispatch = useDispatch();
+
   const fetchData = () => {
     axiosWithAuth()
       .get("/tickets/all")
-      .then((res) =>
-        setData({ ...data, tickets: res.data, selected: res.data[0] })
-      )
+      .then((res) => {
+        dispatch(fetchAllTickets(res.data));
+        dispatch(setSelectedTicket(res.data[0]));
+      })
+
       .catch((err) => console.log(err));
   };
+
+  const fetchUsers = () => {
+    axiosWithAuth()
+      .get("/users")
+      .then((res) => {
+        dispatch(setAllUsers(res.data));
+      });
+  };
+
   useEffect(() => {
     fetchData();
+    fetchUsers();
   }, []);
 
   const choose = (e) => {
@@ -175,9 +65,9 @@ const Dashboard = () => {
   return (
     <>
       <NavBar />
-      <Container>
+      <div className="dashboard_section_container">
         <div className="left">
-          <div style={{ height: "100%" }}>
+          <div className="main_left_container">
             <div className="nav_header">
               <h1>The Queue</h1>
             </div>
@@ -212,7 +102,8 @@ const Dashboard = () => {
           >
             <Alert setSuccess={setSuccess} />
           </div>
-          {data.tickets.length &&
+          {data &&
+            data.tickets.length > 0 &&
             data.tickets.map((item) => {
               return (
                 <Card
@@ -225,11 +116,11 @@ const Dashboard = () => {
             })}
         </div>
         <div className="main_right">
-          {data.tickets.length && (
+          {data.tickets.length > 0 && (
             <TicketInfo ticket={selectedTicket || data.tickets[0]} id={1} />
           )}
         </div>
-      </Container>
+      </div>
     </>
   );
 };

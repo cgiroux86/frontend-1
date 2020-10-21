@@ -16,7 +16,6 @@ export default function TicketForm({ setSuccess, setOpen, fetchData }) {
     axiosWithAuth()
       .post("/tickets", values)
       .then((res) => {
-        console.log(res);
         setOpen(false);
         fetchData();
         setSuccess(true);
@@ -26,23 +25,38 @@ export default function TicketForm({ setSuccess, setOpen, fetchData }) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <input
-        name="description"
-        ref={register({
-          required: "Required",
-        })}
-      />
+      <h2>Create Ticket</h2>
+      <div>
+        <label htmlFfor="description">Description</label>
+        <input
+          name="description"
+          ref={register({
+            required: "Required",
+          })}
+        />
+      </div>
       {errors.description && errors.description.message}
-
-      <input
-        name="attempted_solutions"
-        ref={register({
-          required: "Required",
-        })}
-      />
-      {errors.username && errors.username.message}
-
-      <button type="submit">Submit</button>
+      <div>
+        <label htmlFfor="attempted_solutions">Attempted Solutions</label>
+        <input
+          name="attempted_solutions"
+          ref={register({
+            required: "Required",
+          })}
+        />
+      </div>
+      {errors.attempted_solutions && errors.attempted_solutions.message}
+      <div>
+        <label htmlFor="more_info">More info?</label>
+        <input
+          name="more_info"
+          ref={register({
+            required: "Required",
+          })}
+        />
+      </div>
+      {errors.more_info && errors.more_info.message}
+      <button type="submit">Submit Ticket</button>
     </form>
   );
 }

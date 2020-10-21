@@ -7,5 +7,6 @@ export const userState = atom({
     email: null,
     first_name: null,
     last_name: null,
+    users: [],
   },
 });

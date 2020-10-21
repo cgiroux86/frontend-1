@@ -5,16 +5,14 @@ import GoogleLogin from "react-google-login";
 import FacebookLogin from "react-facebook-login";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook } from "@fortawesome/free-brands-svg-icons";
-import { userState } from "../../recoil/userState";
-import { useRecoilState } from "recoil";
+// import { userState } from "../../recoil/userState";
+// import { useRecoilState } from "recoil";
 
 const Login = ({ history }) => {
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
   });
-
-  const [user, setUser] = useRecoilState(userState);
 
   const handleChange = (e) => {
     setCredentials({
@@ -35,8 +33,8 @@ const Login = ({ history }) => {
           last_name: res.data.last_name,
           email: res.data.email,
         };
-        setUser(userData);
-        console.log(userData, user);
+        // setUser(userData);
+
         history.push("/dashboard");
       })
       .catch((err) => {
@@ -56,7 +54,6 @@ const Login = ({ history }) => {
   };
 
   const responseFacebook = (response) => {
-    console.log(response);
     const user = {
       email: response.email,
       password: response.id,
