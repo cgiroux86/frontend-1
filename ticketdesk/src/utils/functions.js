@@ -13,7 +13,6 @@ export function getPriority(priority) {
 }
 
 export function convertPriorityToNumber(priority) {
-  console.log("THIS IS PRIORITY ==> ", priority);
   switch (priority) {
     case "HIGH":
       return 3;

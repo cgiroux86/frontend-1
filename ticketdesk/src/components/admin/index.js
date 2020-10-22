@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import Navbar from "../shared/NavBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTicketAlt, faAddressCard } from "@fortawesome/free-solid-svg-icons";
-
+import Modal from "./Modal";
 const Admin = () => {
   const users = useSelector((state) => state.User.users);
 
@@ -18,7 +18,7 @@ const Admin = () => {
             users.length > 0 &&
             users.map((user) => {
               return (
-                <div className="admin_user_card">
+                <div key={user.id} className="admin_user_card">
                   <div className="admin_name">
                     <p>
                       <strong>Name: </strong>
@@ -30,25 +30,26 @@ const Admin = () => {
                     </p>
                   </div>
                   <div className="admin_person">
-                    <p>
+                    <div>
                       <strong>Admin: </strong>
                       {<input checked={user.admin} type="checkbox"></input>}
-                    </p>
-                    <p>
-                      <strong>User Tickets </strong>
-                      <FontAwesomeIcon
-                        className="admin_icon"
-                        icon={faAddressCard}
-                      />
-                    </p>
-
-                    <p>
-                      <strong>Assigned Tickets </strong>
-                      <FontAwesomeIcon
-                        className="admin_icon"
-                        icon={faTicketAlt}
-                      />
-                    </p>
+                    </div>
+                    <div>
+                      <div>
+                        <strong>User Tickets </strong>
+                        <Modal data="user" id={user.id} icon={faAddressCard} />
+                      </div>
+                    </div>
+                    <div>
+                      <div>
+                        <strong>Assigned Tickets </strong>
+                        <Modal
+                          data="assigned"
+                          id={user.id}
+                          icon={faTicketAlt}
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
               );
