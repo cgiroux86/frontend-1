@@ -27,7 +27,6 @@ const Login = ({ history }) => {
     axios
       .post("/auth/login", credentials)
       .then((res) => {
-        console.log("LOGIN", res);
         localStorage.setItem("token", res.data.token);
         const userData = {
           id: res.data.id,

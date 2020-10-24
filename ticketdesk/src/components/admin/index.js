@@ -1,14 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import Navbar from "../shared/NavBar";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTicketAlt, faAddressCard } from "@fortawesome/free-solid-svg-icons";
 import Modal from "./Modal";
 import AxiosWithAuth from "../../utils/axiosWithAuth";
+import { setTicketIconColor } from "../../utils/functions";
+import EditAdmin from "./EditAdmin";
+import { setAllUsers } from "../../redux/actions/userActions";
 const Admin = () => {
   const users = useSelector((state) => state.User.users);
   const tickets = useSelector((state) => state.Tickets.tickets);
   const userId = useSelector((state) => state.User.id);
+  const [clicked, setClicked] = useState(false);
 
   const getUserTickets = () => {
     AxiosWithAuth()
@@ -41,10 +43,7 @@ const Admin = () => {
                     </p>
                   </div>
                   <div className="admin_person">
-                    <div>
-                      <strong>Admin: </strong>
-                      {<input checked={user.admin} type="checkbox"></input>}
-                    </div>
+                    <EditAdmin id={user.id} admin={user.admin} />
                     <div>
                       <div>
                         <strong>{`User Tickets (${
@@ -56,6 +55,11 @@ const Admin = () => {
                           userName={`${user.first_name} ${user.last_name}`}
                           data="user"
                           id={user.id}
+                          color={setTicketIconColor(
+                            tickets.filter(
+                              (ticket) => ticket.submitted_by === user.id
+                            )
+                          )}
                           icon={faAddressCard}
                         />
                       </div>
@@ -71,6 +75,11 @@ const Admin = () => {
                           data="assigned"
                           id={user.id}
                           userName={`${user.first_name} ${user.last_name}`}
+                          color={setTicketIconColor(
+                            tickets.filter(
+                              (ticket) => ticket.assigned_to === user.id
+                            )
+                          )}
                           icon={faTicketAlt}
                         />
                       </div>

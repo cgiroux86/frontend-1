@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axiosWithAuth from "../../utils/axiosWithAuth";
+
 function getModalStyle() {
   const top = 50;
   const left = 50;
@@ -35,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SimpleModal({ icon, data, id, userName }) {
+export default function SimpleModal({ icon, data, id, userName, color }) {
   const classes = useStyles();
   const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);
@@ -66,9 +67,18 @@ export default function SimpleModal({ icon, data, id, userName }) {
 
   return (
     <div className="create_ticket">
-      <div onClick={handleOpen} className="modal_button_container">
-        <FontAwesomeIcon className="modal_button" icon={icon} />
-      </div>
+      {userTickets && (
+        <div onClick={handleOpen} className="modal_button_container">
+          <FontAwesomeIcon
+            className="modal_button"
+            style={{
+              color,
+            }}
+            icon={icon}
+          />
+        </div>
+      )}
+
       <Modal
         open={open}
         onClose={handleClose}

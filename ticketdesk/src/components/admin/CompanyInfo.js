@@ -40,7 +40,7 @@ export default function CompanyInfo() {
             {users.length > 0 &&
               users.map((user) => {
                 return (
-                  <div>
+                  <div key={user.id}>
                     Name: {user.first_name} {user.last_name}
                   </div>
                 );
@@ -50,9 +50,8 @@ export default function CompanyInfo() {
             <h2>Admins</h2>
             {admins.length > 0 &&
               admins.map((admin) => {
-                console.log(admin, "ADMIN");
                 return (
-                  <div>
+                  <div key={admin.id}>
                     Name: {admin.first_name} {admin.last_name}
                   </div>
                 );

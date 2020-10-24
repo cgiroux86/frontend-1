@@ -8,9 +8,6 @@ export default function Navbar() {
   const user = useSelector((state) => state.User);
   const history = useHistory();
 
-  useEffect(() => {
-    console.log("THIS IS HISTORY", history);
-  }, [history]);
   return (
     <div className="navbar">
       <div className="ticket_queue">

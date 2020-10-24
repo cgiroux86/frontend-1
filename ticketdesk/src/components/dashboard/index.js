@@ -19,6 +19,7 @@ import {
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 import CompanyInfo from "../admin/CompanyInfo";
+import { shouldDisplayInfo } from "../../utils/functions";
 
 const Dashboard = () => {
   const [active, setActive] = useState({
@@ -72,7 +73,6 @@ const Dashboard = () => {
   };
 
   const changeAdminView = () => {
-    console.log("CLICKED");
     dispatch(setAdminView(!user.is_admin_view));
   };
 
@@ -110,10 +110,12 @@ const Dashboard = () => {
               <div className="create_button">
                 <CreateTicket setSuccess={setSuccess} fetchData={fetchData} />
               </div>
-              <div onClick={changeAdminView} className="admin_button">
-                <FontAwesomeIcon icon={faUsers} />
-                <p>Admin Dashboard</p>
-              </div>
+              {user.admin && (
+                <div onClick={changeAdminView} className="admin_button">
+                  <FontAwesomeIcon icon={faUsers} />
+                  <p>Admin Dashboard</p>
+                </div>
+              )}
             </div>
           </div>
           <div className="middle">

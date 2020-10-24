@@ -82,3 +82,27 @@ export function shouldDisplayButton(sort, urgency, status) {
     return true;
   return false;
 }
+
+export const setTicketIconColor = (tickets) => {
+  if (tickets.length === 0) return "green";
+  if (tickets.length > 0 && tickets.length < 4) return "yellow";
+  if (tickets.length >= 4) return "red";
+};
+
+export const shouldDisplayInfo = (user, ticket) => {
+  if (
+    user.admin ||
+    userOwnsTicket(user, ticket) ||
+    userAssignedTicket(user, ticket)
+  )
+    return true;
+  return false;
+};
+
+export const userOwnsTicket = (user, ticket) => {
+  return ticket.created_by === user.id;
+};
+
+export const userAssignedTicket = (user, ticket) => {
+  return ticket.assigned_to === user.id;
+};
