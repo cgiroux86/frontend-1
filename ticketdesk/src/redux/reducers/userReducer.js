@@ -3,6 +3,7 @@ import {
   LOGIN_USER,
   SET_ADMIN_VIEW,
   FETCH_ADMINS,
+  FETCH_USER_TICKETS,
 } from "../actions/userActions";
 
 const initialState = {
@@ -14,6 +15,8 @@ const initialState = {
   is_logged: false,
   users: [],
   admins: [],
+  tickets: [],
+  assigned_tickets: [],
   is_admin_view: false,
 };
 
@@ -43,6 +46,11 @@ export const userReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         admins: payload,
+      };
+    case FETCH_USER_TICKETS:
+      return {
+        ...state,
+        tickets: payload,
       };
     default:
       return state;

@@ -1,15 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import Navbar from "../shared/NavBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTicketAlt, faAddressCard } from "@fortawesome/free-solid-svg-icons";
 import Modal from "./Modal";
+import AxiosWithAuth from "../../utils/axiosWithAuth";
 const Admin = () => {
   const users = useSelector((state) => state.User.users);
+  const tickets = useSelector((state) => state.Tickets.tickets);
+  const userId = useSelector((state) => state.User.id);
+
+  const getUserTickets = () => {
+    AxiosWithAuth()
+      .get("/tickets/all")
+      .then((res) => console.log("USER TICKETS", res.data))
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    getUserTickets();
+  }, []);
 
   return (
     <div className="admin">
-      <h1>Admin</h1>
       <div>
         <div className="admin_card">
           {users &&
@@ -34,7 +47,11 @@ const Admin = () => {
                     </div>
                     <div>
                       <div>
-                        <strong>User Tickets </strong>
+                        <strong>{`User Tickets (${
+                          tickets.filter(
+                            (ticket) => ticket.submitted_by === user.id
+                          ).length
+                        })`}</strong>
                         <Modal
                           userName={`${user.first_name} ${user.last_name}`}
                           data="user"
@@ -45,7 +62,11 @@ const Admin = () => {
                     </div>
                     <div>
                       <div>
-                        <strong>Assigned Tickets </strong>
+                        <strong>{`Assigned Tickets (${
+                          tickets.filter(
+                            (ticket) => ticket.assigned_to === user.id
+                          ).length
+                        })`}</strong>
                         <Modal
                           data="assigned"
                           id={user.id}

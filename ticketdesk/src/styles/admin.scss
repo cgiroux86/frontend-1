@@ -2,9 +2,9 @@
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  width: 100%;
+  width: 80vw;
   height: 100%;
-  margin: 0 auto;
+
   h1 {
     text-align: center;
   }
@@ -21,7 +21,7 @@
 
   .admin_card {
     display: flex;
-    width: 80%;
+    width: 100%;
     height: 100%;
     margin: 0 auto;
 
@@ -29,9 +29,10 @@
     justify-content: space-evenly;
   }
   .admin_user_card {
-    width: 40%;
+    width: 45%;
     height: 100%;
     margin: 1%;
+    padding: 1%;
     display: flex;
     flex-direction: column;
     background: white;
