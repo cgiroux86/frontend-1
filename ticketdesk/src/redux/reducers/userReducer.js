@@ -1,4 +1,9 @@
-import { SET_ALL_USERS, LOGIN_USER } from "../actions/userActions";
+import {
+  SET_ALL_USERS,
+  LOGIN_USER,
+  SET_ADMIN_VIEW,
+  FETCH_ADMINS,
+} from "../actions/userActions";
 
 const initialState = {
   id: null,
@@ -8,6 +13,8 @@ const initialState = {
   admin: false,
   is_logged: false,
   users: [],
+  admins: [],
+  is_admin_view: false,
 };
 
 export const userReducer = (state = initialState, { type, payload }) => {
@@ -26,6 +33,16 @@ export const userReducer = (state = initialState, { type, payload }) => {
         last_name: payload.last_name,
         admin: payload.admin,
         is_logged: true,
+      };
+    case SET_ADMIN_VIEW:
+      return {
+        ...state,
+        is_admin_view: payload,
+      };
+    case FETCH_ADMINS:
+      return {
+        ...state,
+        admins: payload,
       };
     default:
       return state;

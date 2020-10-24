@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Q from "../../images/Q.png";
 import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 export default function Navbar() {
   const user = useSelector((state) => state.User);
+  const history = useHistory();
+
+  useEffect(() => {
+    console.log("THIS IS HISTORY", history);
+  }, [history]);
   return (
     <div className="navbar">
       <div className="ticket_queue">
@@ -21,11 +27,16 @@ export default function Navbar() {
             <p>{!user.is_logged && "Register"}</p>
           </Link>
         )}
-        {user.admin && (
-          <Link to="/admin">
-            <p>{user.admin && "Admin"}</p>
-          </Link>
-        )}
+        {user.admin &&
+          (history.location.pathname !== "/admin" ? (
+            <Link to="/admin">
+              <p>{user.admin && "Admin"}</p>
+            </Link>
+          ) : (
+            <Link to="/dashboard">
+              <p>{user.admin && "Dashboard"}</p>
+            </Link>
+          ))}
 
         <Link to="/">
           <p>Home</p>

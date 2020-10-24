@@ -9,8 +9,6 @@ const Admin = () => {
 
   return (
     <div className="admin">
-      <Navbar />
-
       <h1>Admin</h1>
       <div>
         <div className="admin_card">
@@ -37,7 +35,12 @@ const Admin = () => {
                     <div>
                       <div>
                         <strong>User Tickets </strong>
-                        <Modal data="user" id={user.id} icon={faAddressCard} />
+                        <Modal
+                          userName={`${user.first_name} ${user.last_name}`}
+                          data="user"
+                          id={user.id}
+                          icon={faAddressCard}
+                        />
                       </div>
                     </div>
                     <div>
@@ -46,6 +49,7 @@ const Admin = () => {
                         <Modal
                           data="assigned"
                           id={user.id}
+                          userName={`${user.first_name} ${user.last_name}`}
                           icon={faTicketAlt}
                         />
                       </div>

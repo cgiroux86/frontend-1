@@ -1,0 +1,11 @@
+.company_info_container {
+  display: flex;
+  width: 80%;
+  background-color: white;
+  .company_info {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 1% 3%;
+  }
+}

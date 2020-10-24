@@ -20,14 +20,22 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     width: "30%",
     height: "50%",
+    display: "flex",
+    flexDirection: "column",
+    overflow: "auto",
     backgroundColor: theme.palette.background.paper,
     border: "2px solid #000",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
+  admin_modal_card: {
+    border: "1px solid black",
+    background: "grey",
+    margin: "1%",
+  },
 }));
 
-export default function SimpleModal({ icon, data, id }) {
+export default function SimpleModal({ icon, data, id, userName }) {
   const classes = useStyles();
   const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);
@@ -69,14 +77,19 @@ export default function SimpleModal({ icon, data, id }) {
       >
         {data === "user" ? (
           <div style={modalStyle} className={classes.paper}>
+            <h1>{`${userName}'s Tickets`}</h1>
             {userTickets &&
               userTickets.length > 0 &&
               userTickets.map((ticket) => {
                 return (
-                  <div key={ticket.id}>
-                    <h2>{ticket.description}</h2>
-                    <p>{ticket.attempted_solutions}</p>
-                    <p>{ticket.priority}</p>
+                  <div className={classes.admin_modal_card} key={ticket.id}>
+                    <h3>Description: {ticket.description}</h3>
+                    <h5>
+                      Attempted Solutions:{" "}
+                      <span>{ticket.attempted_solutions}</span>
+                    </h5>
+                    <p>Priority: {ticket.priority || "No priority assigned"}</p>
+                    <p>Status: {ticket.status || "Not Started"}</p>
                   </div>
                 );
               })}
@@ -86,7 +99,7 @@ export default function SimpleModal({ icon, data, id }) {
             {assignedTickets.length > 0 ? (
               assignedTickets.map((ticket) => {
                 return (
-                  <div key={ticket.id}>
+                  <div className={classes.admin_modal_card} key={ticket.id}>
                     <h2>{ticket.description}</h2>
                     <p>{ticket.attempted_solutions}</p>
                     <p>{ticket.priority}</p>
