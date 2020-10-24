@@ -103,7 +103,7 @@ export default function TicketInfo() {
         </div>
         <div>
           <div className="department_container">
-            {shouldDisplayInfo(user.id, ticket.selected) ? (
+            {user.admin ? (
               <div className="assign_department">
                 <p>
                   <strong>Priority: </strong>
@@ -120,7 +120,7 @@ export default function TicketInfo() {
         </div>
         <div>
           <div className="department_container">
-            {shouldDisplayInfo(user.id, ticket.selected) ? (
+            {user.admin ? (
               <div className="assign_department">
                 <p>
                   <strong>Assigned: </strong>
