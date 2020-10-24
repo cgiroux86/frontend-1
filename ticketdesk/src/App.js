@@ -8,6 +8,7 @@ import "./utils/axiosDefaults";
 import Dashboard from "./components/dashboard";
 import Expansion from "./components/dashboard/Expansion";
 import PrivateRoute from "./utils/privateRoute";
+import Admin from "./components/admin";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />
         <PrivateRoute exact path="/dashboard" component={Dashboard} />
+        <PrivateRoute exact path="/admin" component={Admin} />
         <Route exact path="/expansion" component={Expansion} />
       </Router>
     </div>

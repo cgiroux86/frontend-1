@@ -1,5 +1,8 @@
-.response_container {
-  height: 100%;
+.view_response_container {
+  height: 200px;
+  width: 95%;
+  margin: 1% auto;
+  border: 2px solid rgb(229, 228, 228);
   overflow: auto;
   .response_avatar {
     display: flex;

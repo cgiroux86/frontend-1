@@ -46,7 +46,7 @@ export default function SimpleModal({ fetchData, setSuccess }) {
     <div className="create_ticket">
       <div onClick={handleOpen} className="modal_button_container">
         <FontAwesomeIcon className="modal_button" icon={faPlusCircle} />
-        Create Ticket
+        <p>Create Ticket</p>
       </div>
       <Modal
         open={open}

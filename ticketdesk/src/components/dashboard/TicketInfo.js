@@ -10,6 +10,7 @@ import {
   setSelectedTicket,
   updateTicketResponses,
 } from "../../redux/actions/ticketActions";
+import { shouldDisplayInfo } from "../../utils/functions";
 
 export default function TicketInfo() {
   const [department, setDepartment] = useState(false);
@@ -21,7 +22,7 @@ export default function TicketInfo() {
     department: ["Human Resources", "Accounting", "IT", "Marketing"],
   });
   const ticket = useSelector((state) => state.Tickets);
-  const users = useSelector((state) => state.Users);
+  const user = useSelector((state) => state.User);
   const dispatch = useDispatch();
 
   const toggleAssignDepartment = () => {
@@ -61,15 +62,6 @@ export default function TicketInfo() {
             responses: res.data.updated.responses,
           })
         );
-        // setTicket((ticket) => {
-        //   console.log("TICKET SET TICKET", ticket);
-        //   return {
-        //     ...ticket,
-        //     tickets: res.data.tickets,
-        //     selected: res.data.updated[0],
-        //   };
-        // });
-        // fetchResponses(ticket.selected.ticket_id);
 
         setSuccess(true);
         setResponse("");
@@ -111,26 +103,38 @@ export default function TicketInfo() {
         </div>
         <div>
           <div className="department_container">
-            <div className="assign_department">
-              <p>
-                <strong>Priority: </strong>
-                {/* {ticket.selected.priority || " No priority assigned"} */}
-              </p>
-              <DropDown name="priority" />
-            </div>
+            {user.admin ? (
+              <div className="assign_department">
+                <p>
+                  <strong>Priority: </strong>
+                </p>
+                <DropDown name="priority" />
+              </div>
+            ) : (
+              <div className="assign_department">
+                {" "}
+                {ticket.selected.priority || " No priority assigned"}
+              </div>
+            )}
           </div>
         </div>
         <div>
           <div className="department_container">
-            <div className="assign_department">
-              <p>
-                <strong>Assigned: </strong>
-                {/* {ticket.selected.assigned_first
-                  ? `${ticket.selected.assigned_first} ${ticket.selected.assigned_last}`
-                  : " Not yet assigned"} */}
-              </p>
-              <DropDown name="Assigned" />
-            </div>
+            {user.admin ? (
+              <div className="assign_department">
+                <p>
+                  <strong>Assigned: </strong>
+                </p>
+                <DropDown name="Assigned" />
+              </div>
+            ) : (
+              <div className="assign_department">
+                <p>
+                  <strong>Assigned: </strong>
+                </p>
+                <p>{ticket.selected.assigned_to || "Not yet assigned"}</p>
+              </div>
+            )}
           </div>
           <div className="department_container">
             <div className="assign_department">
@@ -173,7 +177,9 @@ export default function TicketInfo() {
           <button onClick={submitResponse}>Submit Response</button>
         </div>
       </div>
-      <Responses />
+      <div style={{ height: "100%" }}>
+        {shouldDisplayInfo(user.id, ticket.selected) && <Responses />}
+      </div>
     </div>
   );
 }
