@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
@@ -8,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   updateAssigned,
   updatePriority,
+  updateTicketDepartment,
 } from "../../redux/actions/ticketActions";
 
 const useStyles = makeStyles((theme) => ({
@@ -24,7 +24,6 @@ export default function SimpleSelect({ name }) {
   const classes = useStyles();
   const ticket = useSelector((state) => state.Tickets);
   const users = useSelector((state) => state.User);
-  const state = useSelector((state) => state);
   const dispatch = useDispatch();
 
   return (
@@ -54,7 +53,7 @@ export default function SimpleSelect({ name }) {
             </Select>
           </FormControl>
         </div>
-      ) : (
+      ) : name === "Assigned" ? (
         <div>
           <FormControl className={classes.formControl}>
             <Select
@@ -80,6 +79,33 @@ export default function SimpleSelect({ name }) {
                       }}
                     >
                       {`${item.first_name} ${item.last_name}`}
+                    </MenuItem>
+                  );
+                })}
+            </Select>
+          </FormControl>
+        </div>
+      ) : (
+        <div>
+          <FormControl className={classes.formControl}>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={`${ticket.selected.dept_id}`}
+            >
+              {ticket &&
+                ticket.department.length > 0 &&
+                ticket.department.map((item, index) => {
+                  return (
+                    <MenuItem
+                      key={index}
+                      value={item}
+                      onClick={() => {
+                        console.log("item", item);
+                        dispatch(updateTicketDepartment(item));
+                      }}
+                    >
+                      {item}
                     </MenuItem>
                   );
                 })}

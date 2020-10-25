@@ -19,7 +19,6 @@ import {
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 import CompanyInfo from "../admin/CompanyInfo";
-import { shouldDisplayInfo } from "../../utils/functions";
 
 const Dashboard = () => {
   const [active, setActive] = useState({

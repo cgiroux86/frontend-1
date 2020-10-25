@@ -1,16 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { faTicketAlt, faAddressCard } from "@fortawesome/free-solid-svg-icons";
 import Modal from "./Modal";
 import AxiosWithAuth from "../../utils/axiosWithAuth";
 import { setTicketIconColor } from "../../utils/functions";
 import EditAdmin from "./EditAdmin";
-import { setAllUsers } from "../../redux/actions/userActions";
+
 const Admin = () => {
   const users = useSelector((state) => state.User.users);
   const tickets = useSelector((state) => state.Tickets.tickets);
-  const userId = useSelector((state) => state.User.id);
-  const [clicked, setClicked] = useState(false);
 
   const getUserTickets = () => {
     AxiosWithAuth()
@@ -43,7 +41,11 @@ const Admin = () => {
                     </p>
                   </div>
                   <div className="admin_person">
-                    <EditAdmin id={user.id} admin={user.admin} />
+                    <EditAdmin
+                      user={`${user.first_name} ${user.last_name}`}
+                      id={user.id}
+                      admin={user.admin}
+                    />
                     <div>
                       <div>
                         <strong>{`User Tickets (${

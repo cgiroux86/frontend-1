@@ -3,6 +3,8 @@ export const FETCH_ALL_TICKETS = "FETCH_ALL_TICKETS";
 export const UPDATE_PRIORITY = "UPDATE_PRIORITY";
 export const UPDATE_ASSIGNED = "UPDATE_ASSIGNED";
 export const UPDATE_TICKET_RESPONSES = "UPDATE_TICKET_RESPONSES";
+export const UPDATE_TICKET_DEPARTMENT = "UPDATE_TICKET_DEPARTMENT";
+export const RESET_TICKET_VIEWED = "RESET_TICKET_VIEWED";
 
 export const setSelectedTicket = (ticket) => {
   return {
@@ -31,4 +33,18 @@ export const updateAssigned = (assigned) => {
 
 export const updateTicketResponses = (responses) => {
   return { type: UPDATE_TICKET_RESPONSES, payload: responses };
+};
+
+export const updateTicketDepartment = (department) => {
+  return {
+    type: UPDATE_TICKET_DEPARTMENT,
+    payload: department,
+  };
+};
+
+export const resetTicketViewed = (bool) => {
+  return {
+    type: RESET_TICKET_VIEWED,
+    payload: bool,
+  };
 };

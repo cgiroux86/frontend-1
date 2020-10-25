@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AlertDialog({ admin, id }) {
+export default function AlertDialog({ admin, id, user }) {
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
   const classes = useStyles();
@@ -75,7 +75,7 @@ export default function AlertDialog({ admin, id }) {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          {"You are about to promote User to Admin. Are you sure?"}
+          {`You are about to promote ${user} to Admin. Are you sure?`}
         </DialogTitle>
         <DialogActions>
           <Button onClick={handleClose} color="primary">

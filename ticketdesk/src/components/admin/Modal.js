@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -30,9 +30,10 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2, 4, 3),
   },
   admin_modal_card: {
-    border: "1px solid black",
-    background: "grey",
+    borderRadius: "10px",
+    background: "#f9fafb",
     margin: "1%",
+    padding: "1%",
   },
 }));
 
@@ -106,13 +107,15 @@ export default function SimpleModal({ icon, data, id, userName, color }) {
           </div>
         ) : (
           <div style={modalStyle} className={classes.paper}>
+            <h1>{`${userName}'s Assigned Tickets`}</h1>
             {assignedTickets.length > 0 ? (
               assignedTickets.map((ticket) => {
                 return (
                   <div className={classes.admin_modal_card} key={ticket.id}>
-                    <h2>{ticket.description}</h2>
-                    <p>{ticket.attempted_solutions}</p>
-                    <p>{ticket.priority}</p>
+                    <h2>Description: {ticket.description}</h2>
+                    <p>Attempted Solutions: {ticket.attempted_solutions}</p>
+                    <p>Priority: {ticket.priority}</p>
+                    <p>Status: {ticket.status}</p>
                   </div>
                 );
               })
