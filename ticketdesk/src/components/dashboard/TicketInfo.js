@@ -30,7 +30,7 @@ export default function TicketInfo() {
         ? ticket.selected.priority.toUpperCase()
         : null,
       assigned_to: ticket.selected.assigned_to,
-      dept_id: ticket.selected.dept_id
+      department: ticket.selected.dept_id
         ? ticket.selected.dept_id.toUpperCase()
         : null,
     };
