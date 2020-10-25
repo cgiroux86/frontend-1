@@ -7,27 +7,19 @@ import DropDown from "./Dropdown";
 import { useSelector, useDispatch } from "react-redux";
 import {
   fetchAllTickets,
+  resetTicketViewed,
   setSelectedTicket,
   updateTicketResponses,
 } from "../../redux/actions/ticketActions";
 import { shouldDisplayInfo } from "../../utils/functions";
 
 export default function TicketInfo() {
-  const [department, setDepartment] = useState(false);
   const [response, setResponse] = useState("");
   const [success, setSuccess] = useState(false);
-  const [dropDownState, setDropDownState] = useState({
-    priority: ["Low", "Medium", "High"],
-    assigned: [],
-    department: ["Human Resources", "Accounting", "IT", "Marketing"],
-  });
   const ticket = useSelector((state) => state.Tickets);
   const user = useSelector((state) => state.User);
   const dispatch = useDispatch();
 
-  const toggleAssignDepartment = () => {
-    setDepartment(!department);
-  };
   const handleResponse = (e) => {
     setResponse(e.target.value);
   };
@@ -38,12 +30,16 @@ export default function TicketInfo() {
         ? ticket.selected.priority.toUpperCase()
         : null,
       assigned_to: ticket.selected.assigned_to,
+      dept_id: ticket.selected.dept_id
+        ? ticket.selected.dept_id.toUpperCase()
+        : null,
     };
     AxiosWithAuth()
       .put(`/tickets/${ticket.selected.ticket_id}/update`, updates)
       .then((res) => {
         dispatch(fetchAllTickets(res.data.tickets));
         dispatch(setSelectedTicket(res.data.updated));
+        dispatch(resetTicketViewed(false));
       })
       .catch((err) => console.log(err));
   };
@@ -137,32 +133,29 @@ export default function TicketInfo() {
             )}
           </div>
           <div className="department_container">
-            <div className="assign_department">
-              <p>
-                <strong>Department:</strong>
-                {(ticket.selected && ticket.selected.department) ||
-                  " No department assigned"}
-              </p>
-              <button onClick={toggleAssignDepartment}>
-                Assign Department
-              </button>
-            </div>
-            <div
-              className={
-                department ? "show_department_dropdown" : "department_dropdown"
-              }
-            >
-              {dropDownState.department.length > 0 &&
-                dropDownState.department.map((dept) => {
-                  return <div key={Math.random() * 10000}>{dept}</div>;
-                })}
-            </div>
+            {user.admin ? (
+              <div className="assign_department">
+                <p>
+                  <strong>Department: </strong>
+                </p>
+                <DropDown name="Department" />
+              </div>
+            ) : (
+              <div className="assign_department">
+                <p>
+                  <strong>Assigned: </strong>
+                </p>
+                <p>{ticket.selected.assigned_to || "Not yet assigned"}</p>
+              </div>
+            )}
           </div>
           <div className={success ? "alert" : "dont_show"}>
             <Alert setSuccess={setSuccess} />
           </div>
         </div>
-        <button onClick={submitTicketUpdates}>Submit Changes</button>
+        {user.admin && ticket.selected.has_been_updated && (
+          <button onClick={submitTicketUpdates}>Submit Changes</button>
+        )}
       </div>
       <div className="response_container">
         <div className="ticket_response_wrapper">

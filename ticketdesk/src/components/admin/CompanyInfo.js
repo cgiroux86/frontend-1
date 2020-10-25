@@ -7,7 +7,6 @@ export default function CompanyInfo() {
   const users = useSelector((state) => state.User.users);
   const admins = useSelector((state) => state.User.admins);
   const tickets = useSelector((state) => state.Tickets.tickets);
-  const user_tickets = useSelector((state) => state.User.tickets);
   const dispatch = useDispatch();
 
   const getAllAdmins = () => {
@@ -32,7 +31,7 @@ export default function CompanyInfo() {
             <h3>Total Tickets: {tickets.length}</h3>
             <h3>
               Open Tickets:{" "}
-              {tickets.filter((ticket) => ticket.status != "complete").length}
+              {tickets.filter((ticket) => ticket.status !== "complete").length}
             </h3>
           </div>
           <div>

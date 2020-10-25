@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import Q from "../../images/Q.png";
 import { useSelector } from "react-redux";

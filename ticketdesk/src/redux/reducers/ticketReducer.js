@@ -4,6 +4,8 @@ import {
   UPDATE_PRIORITY,
   UPDATE_ASSIGNED,
   UPDATE_TICKET_RESPONSES,
+  UPDATE_TICKET_DEPARTMENT,
+  RESET_TICKET_VIEWED,
 } from "../actions/ticketActions";
 
 const initialState = {
@@ -11,7 +13,7 @@ const initialState = {
   responses: [],
   priority: ["Low", "Medium", "High"],
   assigned: [],
-  department: ["Human Resources", "Accounting", "IT", "Marketing"],
+  departments: ["HR", "Accounting", "IT", "Sales", "Other"],
   selected: {
     ticket_id: null,
     description: null,
@@ -23,6 +25,7 @@ const initialState = {
     priority: null,
     created_at: null,
     updated_at: null,
+    has_been_updated: false,
   },
 };
 
@@ -44,6 +47,7 @@ export const ticketReducer = (state = initialState, { type, payload }) => {
         selected: {
           ...state.selected,
           priority: payload,
+          has_been_updated: true,
         },
       };
     case UPDATE_ASSIGNED:
@@ -54,13 +58,31 @@ export const ticketReducer = (state = initialState, { type, payload }) => {
           assigned_to: payload.id,
           assigned_first: payload.first_name,
           assigned_last: payload.last_name,
+          has_been_updated: true,
         },
       };
     case UPDATE_TICKET_RESPONSES:
       return {
         ...state,
         tickets: payload.data,
-        selected: { ...state.selected, responses: payload.responses },
+        selected: {
+          ...state.selected,
+          responses: payload.responses,
+        },
+      };
+    case UPDATE_TICKET_DEPARTMENT:
+      return {
+        ...state,
+        selected: {
+          ...state.selected,
+          dept_id: payload,
+          has_been_updated: true,
+        },
+      };
+    case RESET_TICKET_VIEWED:
+      return {
+        ...state,
+        selected: { ...state.selected, has_been_updated: false },
       };
     default:
       return state;
