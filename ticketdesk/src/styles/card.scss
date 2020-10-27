@@ -75,16 +75,36 @@
     height: 90%;
     justify-content: space-around;
     height: 100%;
+    @media screen and (max-width: 768px) {
+      width: 40%;
+      height: 90%;
+      margin: 1% 0;
+      justify-content: space-between;
+    }
+    .mobile_ellipsis {
+      @media screen and (min-width: 768px) {
+        display: none;
+      }
+      display: flex;
+      justify-content: flex-end;
+      width: 80%;
+    }
     .popover_container {
       display: flex;
       justify-content: space-evenly;
       width: 100%;
+      @media screen and (max-width: 768px) {
+        margin-top: 5%;
+      }
     }
     .card_ticket_status {
       font-size: 0.7rem;
       display: flex;
       justify-content: space-evenly;
       align-items: center;
+      @media screen and (max-width: 768px) {
+        display: none;
+      }
     }
     .complete_delete_options {
       display: flex;

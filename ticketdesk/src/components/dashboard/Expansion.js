@@ -39,7 +39,7 @@ const TreeTheme = createMuiTheme({
 });
 const useStyles = makeStyles({
   root: {
-    height: "100%",
+    height: "auto",
     width: "100%",
     flexGrow: 1,
     disableFocus: true,
@@ -47,7 +47,7 @@ const useStyles = makeStyles({
   child: {
     width: "90%",
     cursor: "pointer",
-    marginLeft: 25,
+    marginLeft: 0,
     "&.Mui-selected": {
       outline: "none",
       background: "none",
@@ -57,7 +57,7 @@ const useStyles = makeStyles({
     width: "90%",
     background: "lightblue",
     cursor: "pointer",
-    marginLeft: 25,
+    marginLeft: 0,
   },
 });
 
@@ -287,7 +287,7 @@ export default function MultiSelectTreeView() {
           </Typography>
         </TreeItem>
       </TreeView>
-      <div
+      {/* <div
         style={{
           display: "flex",
           flexDirection: "column",
@@ -307,7 +307,7 @@ export default function MultiSelectTreeView() {
             <button onClick={resetTickets}>Reset Tickets</button>
           )}
         </div>
-      </div>
+      </div> */}
     </MuiThemeProvider>
   );
 }

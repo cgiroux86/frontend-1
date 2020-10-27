@@ -2,20 +2,19 @@
   height: 100%;
   width: 100%;
   display: flex;
-
   .left {
-    height: 100%;
-    width: 16%;
+    height: 94vh;
+    width: 20%;
+    overflow: auto;
     background: white;
     display: flex;
     flex-direction: column;
-    padding-bottom: 3%;
+    padding: 0 0 5% 0;
     @media screen and (max-width: 768px) {
       display: none;
     }
     .key_indicators {
       display: flex;
-      flex-direction: column;
       width: 100%;
       justify-content: space-between;
       align-items: center;
@@ -36,9 +35,8 @@
           display: flex;
           flex-direction: column-reverse;
           justify-content: flex-start;
-          margin-left: 20px;
           width: 100%;
-          height: 60%;
+          height: 80%;
           p {
             font-size: 0.8rem;
           }
@@ -65,7 +63,11 @@
           .priority_container {
             display: flex;
             align-items: center;
-            width: 40%;
+            width: 100%;
+            padding-left: 5%;
+            p {
+              margin: 0;
+            }
             div {
               margin-right: 5%;
             }
@@ -79,25 +81,21 @@
       flex-direction: column;
       padding-bottom: 5%;
     }
-
     .nav_header {
       padding: 0 0 0 5%;
       font-size: 1.2rem;
       text-decoration: underline;
     }
-
     .main {
       h2 {
         padding: 0 0 0 5%;
         font-size: 1.5rem;
         margin: 5% 0;
       }
-
       .active {
         background: lightblue;
         border-left: 4px solid blue;
       }
-
       .main_button {
         margin: 5% 0;
       }
@@ -117,12 +115,10 @@
         }
       }
     }
-
     .filters {
       display: flex;
       flex-direction: column;
-      height: 20%;
-
+      height: auto;
       select {
         margin: 4px 0;
         border: none;
@@ -133,16 +129,13 @@
       width: 100%;
       flex-direction: column;
       padding: 20% 0;
-
       display: flex;
       cursor: pointer;
       font-size: 2rem;
-
       .create_button {
         color: green;
         width: 80%;
         padding: 4% 0;
-
         p {
           color: black;
           font-size: 1.2rem;
@@ -156,7 +149,6 @@
         align-items: center;
         padding: 4% 0;
         margin-left: 2%;
-
         p {
           margin: 1%;
           color: black;
@@ -165,16 +157,28 @@
       }
     }
   }
-
   .middle {
     width: 60%;
-    height: 100%;
+    height: 10;
     display: flex;
     padding-left: 3%;
     flex-direction: column;
     @media screen and (max-width: 768px) {
       width: 100vw;
+      height: 100%;
       padding: 0;
+    }
+    .mobile_create_ticket {
+      @media screen and (min-width: 768px) {
+        display: none;
+      }
+      position: fixed;
+      right: 10%;
+      bottom: 8%;
+      font-size: 4.5rem;
+      color: #0070eb;
+      opacity: 0.9;
+      z-index: 1;
     }
     .mobile_header {
       @media screen and (min-width: 768px) {
@@ -185,7 +189,6 @@
       margin-bottom: 20px;
       display: flex;
       flex-direction: column;
-
       h2 {
         text-align: center;
         padding: 0;
@@ -210,48 +213,40 @@
         }
       }
     }
-
     .left {
       width: 15%;
       height: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
-
       p {
         font-size: 1.2rem;
         text-align: center;
         margin: 0;
       }
     }
-
     .middle {
       width: 70%;
       height: 100%;
-
       h2 {
         margin: 0;
         padding: 0;
         border: none;
       }
-
       p {
         margin: 0;
         padding: 0;
         border: none;
       }
     }
-
     .right {
       width: 15%;
       height: 100%;
-
       p {
       }
     }
   }
 }
-
 .right {
   height: 100%;
   width: 30%;
@@ -266,7 +261,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-
     p {
       color: white;
     }

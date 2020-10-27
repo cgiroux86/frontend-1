@@ -4,6 +4,7 @@ import NavBar from "../shared/NavBar";
 import Card from "./Card";
 import TicketInfo from "./TicketInfo";
 import CreateTicket from "./CreateTicket";
+import TicketForm from "./TicketForm";
 import axiosWithAuth from "../../utils/axiosWithAuth";
 import { useSelector, useDispatch } from "react-redux";
 import Alert from "./Alert";
@@ -17,8 +18,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChalkboardTeacher,
   faUsers,
+  faPlusCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import CompanyInfo from "../admin/CompanyInfo";
+import MobileMain from "./MobileMain";
 
 const Dashboard = () => {
   const [active, setActive] = useState({
@@ -80,7 +83,7 @@ const Dashboard = () => {
   };
 
   return (
-    <>
+    <div>
       <NavBar />
       {!user.is_admin_view ? (
         <div className="dashboard_section_container">
@@ -170,14 +173,13 @@ const Dashboard = () => {
             >
               <Alert setSuccess={setSuccess} />
             </div>
-            <div className="mobile_header">
-              <div className="mobile_title">
-                <h2>The Queue</h2>
-              </div>
-              <div className="mobile_options_container">
-                <div>All Tickets</div>
-                <div>My Tickets</div>
-              </div>
+            <div className="mobile_container">
+              <MobileMain
+                active={active}
+                setActive={setActive}
+                setSuccess={setSuccess}
+                fetchData={fetchData}
+              />
             </div>
             {data &&
               data.tickets.length > 0 &&
@@ -234,7 +236,7 @@ const Dashboard = () => {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

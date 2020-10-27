@@ -8,8 +8,13 @@ import {
   fetchAllTickets,
   setSelectedTicket,
 } from "../../redux/actions/ticketActions";
-import { faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCheck,
+  faTimes,
+  faEllipsisV,
+} from "@fortawesome/free-solid-svg-icons";
 import ConfirmPopover from "./Popover";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function Card({ info }) {
   const deleteCard = (id) => {
@@ -96,6 +101,9 @@ export default function Card({ info }) {
               width: "10px",
             }}
           ></div>
+        </div>
+        <div className="mobile_ellipsis">
+          <FontAwesomeIcon icon={faEllipsisV} />
         </div>
       </div>
     </div>
