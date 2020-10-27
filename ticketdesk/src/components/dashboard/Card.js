@@ -8,14 +8,12 @@ import {
   fetchAllTickets,
   setSelectedTicket,
 } from "../../redux/actions/ticketActions";
-import {
-  faCheckCircle,
-  faTimesCircle,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
 import ConfirmPopover from "./Popover";
 
 export default function Card({ info }) {
   const deleteCard = (id) => {
+    console.log("ID TO DELETE", id);
     AxiosWithAuth()
       .delete(`/tickets/${id}`)
       .then((res) => {
@@ -27,9 +25,15 @@ export default function Card({ info }) {
 
   const markCardComplete = (id) => {
     const updates = {
-      status: "complete",
+      status: "not started",
     };
-    AxiosWithAuth().put(`/tickets/${id}/update`, updates).then();
+    AxiosWithAuth()
+      .put(`/tickets/${id}/update`, updates)
+      .then((res) => {
+        console.log(res.data.tickets);
+        dispatch(fetchAllTickets(res.data.tickets));
+      })
+      .catch((err) => console.log(err));
   };
 
   const ticket = useSelector((state) => state.Tickets);
@@ -71,14 +75,17 @@ export default function Card({ info }) {
         <div className="popover_container">
           <ConfirmPopover
             text="Are you sure you want to make this complete?"
-            icon={faCheckCircle}
+            icon={faCheck}
             iconClass="complete"
+            fn={markCardComplete}
+            ticket_id={info.ticket_id}
           />
           <ConfirmPopover
-            icon={faTimesCircle}
+            icon={faTimes}
             iconClass="delete"
             text="Are you sure you wish to delete this card?"
-            onClick={() => deleteCard(info.ticket_id)}
+            fn={deleteCard}
+            ticket_id={info.ticket_id}
           ></ConfirmPopover>
         </div>
         <div className="card_ticket_status">

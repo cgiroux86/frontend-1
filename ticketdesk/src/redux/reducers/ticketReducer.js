@@ -6,6 +6,7 @@ import {
   UPDATE_TICKET_RESPONSES,
   UPDATE_TICKET_DEPARTMENT,
   RESET_TICKET_VIEWED,
+  UPDATE_TICKET_STATUS,
 } from "../actions/ticketActions";
 
 const initialState = {
@@ -83,6 +84,11 @@ export const ticketReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         selected: { ...state.selected, has_been_updated: false },
+      };
+    case UPDATE_TICKET_STATUS:
+      return {
+        ...state,
+        selected: { ...state.selected, status: payload },
       };
     default:
       return state;

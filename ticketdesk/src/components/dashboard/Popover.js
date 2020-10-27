@@ -15,7 +15,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SimplePopover({ icon, text, iconClass }) {
+export default function SimplePopover({
+  icon,
+  text,
+  iconClass,
+  fn,
+  ticket_id,
+}) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -60,8 +66,8 @@ export default function SimplePopover({ icon, text, iconClass }) {
       >
         <Typography className={classes.typography}>{text}</Typography>
         <div className={classes.button_container}>
-          <Button>Yes</Button>
-          <Button>No</Button>
+          <Button onClick={() => fn(ticket_id)}>Yes</Button>
+          <Button onClick={handleClose}>No</Button>
         </div>
       </Popover>
     </div>
