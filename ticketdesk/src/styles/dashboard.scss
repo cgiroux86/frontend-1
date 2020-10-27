@@ -9,14 +9,13 @@
     background: white;
     display: flex;
     flex-direction: column;
-    padding-bottom: 7%;
+    padding-bottom: 3%;
     .key_indicators {
       display: flex;
       flex-direction: column;
       width: 100%;
       justify-content: space-between;
       align-items: center;
-      border: 1px solid yellow;
       .status_indicator_container {
         display: flex;
         flex-direction: column;
@@ -24,19 +23,21 @@
         padding: 0;
         width: 100%;
         height: 100%;
-        align-items: center;
         h4 {
-          margin: 1%;
           padding: 0;
+          margin-bottom: 5px;
+          margin-left: 20px;
+          text-decoration: underline;
         }
         .indicator_item_container {
           display: flex;
           flex-direction: column-reverse;
-          justify-content: space-evenly;
+          justify-content: flex-start;
+          margin-left: 20px;
           width: 100%;
           height: 60%;
           p {
-            font-size: 0.7rem;
+            font-size: 0.8rem;
           }
           .no_priority {
             width: 10px;
@@ -61,10 +62,9 @@
           .priority_container {
             display: flex;
             align-items: center;
-            justify-content: space-evenly;
             width: 40%;
             div {
-              margin-right: 1%;
+              margin-right: 5%;
             }
           }
         }
@@ -73,7 +73,6 @@
     .main_left_container {
       height: 100%;
       display: flex;
-      border: 1px solid lime;
       flex-direction: column;
       padding-bottom: 5%;
     }

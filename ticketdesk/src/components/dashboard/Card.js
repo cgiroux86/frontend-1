@@ -1,6 +1,6 @@
 import React from "react";
 import { Avatar } from "@material-ui/core";
-import { getPriority } from "../../utils/functions";
+import { getCardTicketStatus, getPriority } from "../../utils/functions";
 import AxiosWithAuth from "../../utils/axiosWithAuth";
 import { formatDate } from "../../utils/formatDate";
 import { useSelector, useDispatch } from "react-redux";
@@ -68,19 +68,29 @@ export default function Card({ info }) {
         )}
       </div>
       <div className="complete_delete_container">
-        <ConfirmPopover
-          text="Are you sure you want to make this complete?"
-          icon={faCheckCircle}
-          iconClass="complete"
-        />
-        <ConfirmPopover
-          icon={faTimesCircle}
-          iconClass="delete"
-          text="Are you sure you wish to delete this card?"
-          onClick={() => deleteCard(info.ticket_id)}
-        >
-          Delete
-        </ConfirmPopover>
+        <div className="popover_container">
+          <ConfirmPopover
+            text="Are you sure you want to make this complete?"
+            icon={faCheckCircle}
+            iconClass="complete"
+          />
+          <ConfirmPopover
+            icon={faTimesCircle}
+            iconClass="delete"
+            text="Are you sure you wish to delete this card?"
+            onClick={() => deleteCard(info.ticket_id)}
+          ></ConfirmPopover>
+        </div>
+        <div className="card_ticket_status">
+          Status:{" "}
+          <div
+            style={{
+              background: getCardTicketStatus(info),
+              height: "10px",
+              width: "10px",
+            }}
+          ></div>
+        </div>
       </div>
     </div>
   );
