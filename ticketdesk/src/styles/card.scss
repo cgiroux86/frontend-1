@@ -64,7 +64,18 @@
     display: flex;
     width: 20%;
     justify-content: space-evenly;
+    height: 100%;
     margin-top: 2%;
+    .card_ticket_status {
+      font-size: 0.7rem;
+      display: flex;
+      align-items: center;
+    }
+    .complete_delete_options {
+      display: flex;
+      width: 100%;
+      justify-content: space-evenly;
+    }
     .delete {
       color: red;
       font-size: 1.5rem;

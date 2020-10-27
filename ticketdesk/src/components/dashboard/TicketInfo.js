@@ -97,65 +97,84 @@ export default function TicketInfo() {
             </p>
           </div>
         </div>
-        <div>
-          <div className="department_container">
-            {user.admin ? (
-              <div className="assign_department">
-                <p>
-                  <strong>Priority: </strong>
-                </p>
-                <DropDown name="priority" />
-              </div>
-            ) : (
-              <div className="assign_department">
-                {" "}
-                {ticket.selected.priority || " No priority assigned"}
-              </div>
-            )}
+        <div className="choices_container">
+          {/* <div>
+            <div className="department_container">
+              {user.admin ? (
+                <div className="assign_department">
+                  <p>
+                    <strong>Status: </strong>
+                  </p>
+                  <DropDown name="priority" />
+                </div>
+              ) : (
+                <div className="assign_department">
+                  {" "}
+                  {ticket.selected.priority || " No priority assigned"}
+                </div>
+              )}
+            </div>
+          </div> */}
+          <div>
+            <div className="department_container">
+              {user.admin ? (
+                <div className="assign_department">
+                  <p>
+                    <strong>Priority: </strong>
+                  </p>
+                  <DropDown name="priority" />
+                </div>
+              ) : (
+                <div className="assign_department">
+                  {" "}
+                  {ticket.selected.priority || " No priority assigned"}
+                </div>
+              )}
+            </div>
           </div>
+          <div>
+            <div className="department_container">
+              {user.admin ? (
+                <div className="assign_department">
+                  <p>
+                    <strong>Assigned: </strong>
+                  </p>
+                  <DropDown name="Assigned" />
+                </div>
+              ) : (
+                <div className="assign_department">
+                  <p>
+                    <strong>Assigned: </strong>
+                  </p>
+                  <p>{ticket.selected.assigned_to || "Not yet assigned"}</p>
+                </div>
+              )}
+            </div>
+            <div className="department_container">
+              {user.admin ? (
+                <div className="assign_department">
+                  <p>
+                    <strong>Department: </strong>
+                  </p>
+                  <DropDown name="Department" />
+                </div>
+              ) : (
+                <div className="assign_department">
+                  <p>
+                    <strong>Department: </strong>
+                  </p>
+                  <p>{ticket.selected.assigned_to || "Not yet assigned"}</p>
+                </div>
+              )}
+            </div>
+            <div className={success ? "alert" : "dont_show"}>
+              <Alert setSuccess={setSuccess} />
+            </div>
+          </div>
+          {user.admin && ticket.selected.has_been_updated && (
+            <button onClick={submitTicketUpdates}>Submit Changes</button>
+          )}
         </div>
-        <div>
-          <div className="department_container">
-            {user.admin ? (
-              <div className="assign_department">
-                <p>
-                  <strong>Assigned: </strong>
-                </p>
-                <DropDown name="Assigned" />
-              </div>
-            ) : (
-              <div className="assign_department">
-                <p>
-                  <strong>Assigned: </strong>
-                </p>
-                <p>{ticket.selected.assigned_to || "Not yet assigned"}</p>
-              </div>
-            )}
-          </div>
-          <div className="department_container">
-            {user.admin ? (
-              <div className="assign_department">
-                <p>
-                  <strong>Department: </strong>
-                </p>
-                <DropDown name="Department" />
-              </div>
-            ) : (
-              <div className="assign_department">
-                <p>
-                  <strong>Assigned: </strong>
-                </p>
-                <p>{ticket.selected.assigned_to || "Not yet assigned"}</p>
-              </div>
-            )}
-          </div>
-          <div className={success ? "alert" : "dont_show"}>
-            <Alert setSuccess={setSuccess} />
-          </div>
-        </div>
-        {user.admin && ticket.selected.has_been_updated && (
-          <button onClick={submitTicketUpdates}>Submit Changes</button>
-        )}
       </div>
       <div className="response_container">
         <div className="ticket_response_wrapper">

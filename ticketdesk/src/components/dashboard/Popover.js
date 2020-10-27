@@ -9,17 +9,23 @@ const useStyles = makeStyles((theme) => ({
   typography: {
     padding: theme.spacing(2),
   },
+  button_container: {
+    display: "flex",
+    justifyContent: "flex-end",
+  },
 }));
 
-export default function SimplePopover({ icon, text }) {
+export default function SimplePopover({ icon, text, iconClass }) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = (event) => {
+    event.stopPropagation();
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
+  const handleClose = (e) => {
+    e.stopPropagation();
     setAnchorEl(null);
   };
 
@@ -29,6 +35,7 @@ export default function SimplePopover({ icon, text }) {
   return (
     <div>
       <FontAwesomeIcon
+        className={iconClass}
         icon={icon}
         aria-describedby={id}
         variant="contained"
@@ -52,8 +59,10 @@ export default function SimplePopover({ icon, text }) {
         }}
       >
         <Typography className={classes.typography}>{text}</Typography>
-        <Button>Yes</Button>
-        <Button>No</Button>
+        <div className={classes.button_container}>
+          <Button>Yes</Button>
+          <Button>No</Button>
+        </div>
       </Popover>
     </div>
   );

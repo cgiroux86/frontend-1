@@ -14,7 +14,6 @@ export default function Navbar() {
         <img src={Q} alt="Ticket Queue logo"></img>
         <p>TICKET QUEUE</p>
       </div>
-      <div className="logo"></div>
       <div className="nav_links">
         <Link className="link" to="/login">
           <p>{user.is_logged ? "Logout" : "Login"}</p>
