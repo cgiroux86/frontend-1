@@ -60,4 +60,18 @@
     font-size: 1rem;
     text-align: center;
   }
+  .complete_delete_container {
+    display: flex;
+    width: 20%;
+    justify-content: space-evenly;
+    margin-top: 2%;
+    .delete {
+      color: red;
+      font-size: 1.5rem;
+    }
+    .complete {
+      color: green;
+      font-size: 1.5rem;
+    }
+  }
 }
