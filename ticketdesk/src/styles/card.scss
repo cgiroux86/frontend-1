@@ -7,6 +7,14 @@
   box-shadow: 2px 2px 2px 2px lightgrey;
   display: flex;
   justify-content: space-around;
+  cursor: pointer;
+  @media screen and (max-width: 768px) {
+    width: 90%;
+    padding: 0;
+    margin-left: 2%;
+    margin-right: 0;
+    margin-top: 5%;
+  }
   .card_middle {
     width: 70%;
     height: 90%;

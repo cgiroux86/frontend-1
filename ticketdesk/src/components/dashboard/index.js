@@ -170,6 +170,15 @@ const Dashboard = () => {
             >
               <Alert setSuccess={setSuccess} />
             </div>
+            <div className="mobile_header">
+              <div className="mobile_title">
+                <h2>The Queue</h2>
+              </div>
+              <div className="mobile_options_container">
+                <div>All Tickets</div>
+                <div>My Tickets</div>
+              </div>
+            </div>
             {data &&
               data.tickets.length > 0 &&
               data.tickets.map((item) => {
@@ -191,7 +200,7 @@ const Dashboard = () => {
         </div>
       ) : (
         <div className="dashboard_section_container">
-          <div className="left">
+          <div className="admin_left">
             <div className="main_left_container">
               <div className="nav_header">
                 <h1>Admin</h1>

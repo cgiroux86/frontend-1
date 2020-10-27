@@ -7,6 +7,9 @@
   justify-content: space-evenly;
   background: white;
   position: relative;
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
   // padding-bottom: 4%;
   right: 20%;
   .ticket_info_wrapper {

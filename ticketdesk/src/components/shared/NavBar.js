@@ -24,7 +24,7 @@ export default function Navbar() {
           </Link>
         )}
         {user.admin &&
-          (history.location.pathname !== "/admin" ? (
+          (!user.is_admin_view ? (
             <Link to="/admin">
               <p>{user.admin && "Admin"}</p>
             </Link>

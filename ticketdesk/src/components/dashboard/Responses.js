@@ -5,7 +5,7 @@ export default function Responses() {
   const ticket = useSelector((state) => state.Tickets);
   return (
     <div>
-      <h3>Responses</h3>
+      <h3 style={{ textAlign: "center" }}>Responses</h3>
       <div className="view_response_container">
         <div>
           {ticket.selected &&

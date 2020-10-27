@@ -13,7 +13,6 @@ import ConfirmPopover from "./Popover";
 
 export default function Card({ info }) {
   const deleteCard = (id) => {
-    console.log("ID TO DELETE", id);
     AxiosWithAuth()
       .delete(`/tickets/${id}`)
       .then((res) => {
