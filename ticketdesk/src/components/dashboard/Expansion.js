@@ -289,7 +289,6 @@ export default function MultiSelectTreeView() {
       </TreeView>
       <div
         style={{
-          margin: "20% 0",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -303,7 +302,7 @@ export default function MultiSelectTreeView() {
             <button onClick={handleSubmit}>Sort/Filter Tickets</button>
           )}
         </div>
-        <div className="reset_tickets" style={{ margin: "10% 0" }}>
+        <div className="reset_tickets" style={{ margin: "0" }}>
           {shouldDisplayButton(sortItems, urgency, status) && (
             <button onClick={resetTickets}>Reset Tickets</button>
           )}

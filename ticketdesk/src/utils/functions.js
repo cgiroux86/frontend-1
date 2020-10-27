@@ -106,3 +106,14 @@ export const userOwnsTicket = (user, ticket) => {
 export const userAssignedTicket = (user, ticket) => {
   return ticket.assigned_to === user.id;
 };
+
+export const getCardTicketStatus = (ticket) => {
+  switch (ticket.status) {
+    case "in progress":
+      return "yellow";
+    case "complete":
+      return "green";
+    default:
+      return "magenta";
+  }
+};

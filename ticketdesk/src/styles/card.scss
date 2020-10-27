@@ -60,4 +60,36 @@
     font-size: 1rem;
     text-align: center;
   }
+  .complete_delete_container {
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    height: 90%;
+    justify-content: space-around;
+    height: 100%;
+    .popover_container {
+      display: flex;
+      justify-content: space-evenly;
+      width: 100%;
+    }
+    .card_ticket_status {
+      font-size: 0.7rem;
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+    }
+    .complete_delete_options {
+      display: flex;
+      width: 100%;
+      justify-content: space-evenly;
+    }
+    .delete {
+      color: red;
+      font-size: 1.5rem;
+    }
+    .complete {
+      color: green;
+      font-size: 1.5rem;
+    }
+  }
 }

@@ -1,6 +1,6 @@
 import React from "react";
 import { Avatar } from "@material-ui/core";
-import { getPriority } from "../../utils/functions";
+import { getCardTicketStatus, getPriority } from "../../utils/functions";
 import AxiosWithAuth from "../../utils/axiosWithAuth";
 import { formatDate } from "../../utils/formatDate";
 import { useSelector, useDispatch } from "react-redux";
@@ -8,8 +8,13 @@ import {
   fetchAllTickets,
   setSelectedTicket,
 } from "../../redux/actions/ticketActions";
+import {
+  faCheckCircle,
+  faTimesCircle,
+} from "@fortawesome/free-solid-svg-icons";
+import ConfirmPopover from "./Popover";
 
-export default function Card({ info, fetchData }) {
+export default function Card({ info }) {
   const deleteCard = (id) => {
     AxiosWithAuth()
       .delete(`/tickets/${id}`)
@@ -18,6 +23,13 @@ export default function Card({ info, fetchData }) {
         dispatch(setSelectedTicket(res.data[0] || {}));
       })
       .catch((err) => console.log(err));
+  };
+
+  const markCardComplete = (id) => {
+    const updates = {
+      status: "complete",
+    };
+    AxiosWithAuth().put(`/tickets/${id}/update`, updates).then();
   };
 
   const ticket = useSelector((state) => state.Tickets);
@@ -55,7 +67,31 @@ export default function Card({ info, fetchData }) {
           </div>
         )}
       </div>
-      <button onClick={() => deleteCard(info.ticket_id)}>Delete</button>
+      <div className="complete_delete_container">
+        <div className="popover_container">
+          <ConfirmPopover
+            text="Are you sure you want to make this complete?"
+            icon={faCheckCircle}
+            iconClass="complete"
+          />
+          <ConfirmPopover
+            icon={faTimesCircle}
+            iconClass="delete"
+            text="Are you sure you wish to delete this card?"
+            onClick={() => deleteCard(info.ticket_id)}
+          ></ConfirmPopover>
+        </div>
+        <div className="card_ticket_status">
+          Status:{" "}
+          <div
+            style={{
+              background: getCardTicketStatus(info),
+              height: "10px",
+              width: "10px",
+            }}
+          ></div>
+        </div>
+      </div>
     </div>
   );
 }

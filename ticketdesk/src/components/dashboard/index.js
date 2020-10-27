@@ -104,17 +104,57 @@ const Dashboard = () => {
               <div className="filters">
                 <Expansion />
               </div>
-            </div>
-            <div className="side_nav_buttons">
-              <div className="create_button">
-                <CreateTicket setSuccess={setSuccess} fetchData={fetchData} />
-              </div>
-              {user.admin && (
-                <div onClick={changeAdminView} className="admin_button">
-                  <FontAwesomeIcon icon={faUsers} />
-                  <p>Admin Dashboard</p>
+              <div className="side_nav_buttons">
+                <div className="create_button">
+                  <CreateTicket setSuccess={setSuccess} fetchData={fetchData} />
                 </div>
-              )}
+                {user.admin && (
+                  <div onClick={changeAdminView} className="admin_button">
+                    <FontAwesomeIcon icon={faUsers} />
+                    <p>Admin Dashboard</p>
+                  </div>
+                )}
+              </div>
+            </div>
+            <div className="key_indicators">
+              <div className="status_indicator_container">
+                <h4>Status</h4>
+                <div className="indicator_item_container">
+                  <div className="priority_container">
+                    <div className="no_priority"></div>
+                    <p>Not Started</p>
+                  </div>
+                  <div className="priority_container">
+                    <div className="medium_priority"></div>
+                    <p>In Progress</p>
+                  </div>
+                  <div className="priority_container">
+                    <div className="low_priority"></div>
+                    <p>Complete</p>
+                  </div>
+                </div>
+              </div>
+              <div className="status_indicator_container">
+                <h4>Priority</h4>
+                <div className="indicator_item_container">
+                  <div className="priority_container">
+                    <div className="no_priority"></div>
+                    <p>No Priority</p>
+                  </div>
+                  <div className="priority_container">
+                    <div className="low_priority"></div>
+                    <p>Low</p>
+                  </div>
+                  <div className="priority_container">
+                    <div className="medium_priority"></div>
+                    <p>Medium</p>
+                  </div>
+                  <div className="priority_container">
+                    <div className="high_priority"></div>
+                    <p>High</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <div className="middle">
