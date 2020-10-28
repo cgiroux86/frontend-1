@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import TicketForm from "./TicketForm";
 import { makeStyles } from "@material-ui/core/styles";
-import { noAuto } from "@fortawesome/fontawesome-svg-core";
 
 function getModalStyle() {
   const top = 50;
@@ -40,7 +39,6 @@ export default function MobileMain({
   const classes = useStyles();
   const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);
-  console.log("ACTIVE", active);
   const handleOpen = () => {
     setOpen(true);
   };
@@ -69,10 +67,20 @@ export default function MobileMain({
           <h2>The Queue</h2>
         </div>
         <div className="mobile_options_container">
-          <div className={active.all ? "active" : "main_button"}>
+          <div
+            id="all"
+            onClick={choose}
+            className={active.all ? "active" : "main_button"}
+          >
             All Tickets
           </div>
-          <div className={active.my ? "active" : "main_button"}>My Tickets</div>
+          <div
+            id="my"
+            onClick={choose}
+            className={active.my ? "active" : "main_button"}
+          >
+            My Tickets
+          </div>
         </div>
       </div>
       <FontAwesomeIcon

@@ -166,7 +166,9 @@
     @media screen and (max-width: 768px) {
       width: 100vw;
       height: 100%;
+      margin: 0 auto;
       padding: 0;
+      align-items: center;
     }
     .mobile_create_ticket {
       @media screen and (min-width: 768px) {
@@ -204,9 +206,11 @@
         display: flex;
         justify-content: space-evenly;
         font-size: 1.2rem;
-        text-decoration: underline;
+        .active {
+          border-bottom: 4px solid rgb(86, 86, 255);
+        }
         div {
-          width: 50%;
+          width: 40%;
           margin-top: 20px;
           color: black;
           text-align: center;
