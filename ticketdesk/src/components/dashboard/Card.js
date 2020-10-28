@@ -17,7 +17,6 @@ import ConfirmPopover from "./Popover";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
-import TicketInfo from "./TicketInfo";
 import MobileTicketInfo from "./MobileTicketInfo";
 
 function getModalStyle() {
@@ -28,8 +27,11 @@ function getModalStyle() {
     top: `${top}%`,
     left: `${left}%`,
     transform: `translate(-${top}%, -${left}%)`,
-    height: "auto",
+    height: "80%",
     margin: "0 auto",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
   };
 }
 
@@ -37,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     position: "absolute",
     width: "80%",
-    height: "auto",
+    height: "100%",
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
