@@ -22,6 +22,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import CompanyInfo from "../admin/CompanyInfo";
 import MobileMain from "./MobileMain";
+import TabletMain from "./TabletMain";
 
 const Dashboard = () => {
   const [active, setActive] = useState({
@@ -181,6 +182,7 @@ const Dashboard = () => {
                 fetchData={fetchData}
               />
             </div>
+
             {data &&
               data.tickets.length > 0 &&
               data.tickets.map((item) => {
@@ -198,6 +200,9 @@ const Dashboard = () => {
             {data.tickets.length > 0 && (
               <TicketInfo ticket={selectedTicket || data.tickets[0]} id={1} />
             )}
+          </div>
+          <div className="tablet_main">
+            <TabletMain active={active} setActive={setActive} choose={choose} />
           </div>
         </div>
       ) : (

@@ -37,7 +37,7 @@ export default function MobileTicketInfo({ ticket }) {
       : "",
     priority: ticket.priority ? ticket.priority : "",
   });
-  console.log("TICKET", ticket, ticketChanges);
+
   const [assignedTo, setAssignedTo] = useState(null);
   const shouldDisplayButton = () => {
     return (
@@ -60,7 +60,6 @@ export default function MobileTicketInfo({ ticket }) {
       assigned_to: assignedTo ? assignedTo : null,
       department: ticketChanges.department ? ticket.department : null,
     };
-    console.log("UPDATES", updates, assignedTo);
     AxiosWithAuth()
       .put(`/tickets/${ticket.ticket_id}/update`, updates)
       .then((res) => {
@@ -237,7 +236,7 @@ export default function MobileTicketInfo({ ticket }) {
               style={{ color: "green" }}
               icon={faCheck}
             />
-            <FontAwesomeIcon style={{ color: "red" }} icon={faTimes} />
+            <FontAwesomeIcon hstyle={{ color: "red" }} icon={faTimes} />
           </div>
         </div>
       )}
