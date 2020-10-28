@@ -1,11 +1,17 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import { makeStyles } from "@material-ui/core/styles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
+import {
+  fetchAllTickets,
+  setSelectedTicket,
+  resetTicketViewed,
+} from "../../redux/actions/ticketActions";
+import AxiosWithAuth from "../../utils/axiosWithAuth";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -20,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function MobileTicketInfo({ ticket }) {
-  console.log("TICKET", ticket);
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.User);
   const ticket_info = useSelector((state) => state.Tickets);
   const classes = useStyles();
@@ -31,7 +37,8 @@ export default function MobileTicketInfo({ ticket }) {
       : "",
     priority: ticket.priority ? ticket.priority : "",
   });
-
+  console.log("TICKET", ticket, ticketChanges);
+  const [assignedTo, setAssignedTo] = useState(null);
   const shouldDisplayButton = () => {
     return (
       (ticketChanges.priority !== "" &&
@@ -42,6 +49,27 @@ export default function MobileTicketInfo({ ticket }) {
       (ticketChanges.department !== "" &&
         ticketChanges.department !== ticket.department)
     );
+  };
+
+  const submitTicketUpdates = () => {
+    const updates = {
+      priority:
+        ticketChanges.priority != ""
+          ? ticketChanges.priority.toUpperCase()
+          : null,
+      assigned_to: assignedTo ? assignedTo : null,
+      department: ticketChanges.department ? ticket.department : null,
+    };
+    console.log("UPDATES", updates, assignedTo);
+    AxiosWithAuth()
+      .put(`/tickets/${ticket.ticket_id}/update`, updates)
+      .then((res) => {
+        console.log("RESPONSE", res);
+        dispatch(fetchAllTickets(res.data.tickets));
+        dispatch(setSelectedTicket(res.data.updated));
+        dispatch(resetTicketViewed(false));
+      })
+      .catch((err) => console.log(err));
   };
 
   function DropDown({ name }) {
@@ -72,44 +100,51 @@ export default function MobileTicketInfo({ ticket }) {
             </Select>
           </FormControl>
         ) : name === "assigned" ? (
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={ticketChanges.assigned}
-            onChange={handleChange}
-            style={{ width: "60%", padding: "1% 0" }}
-          >
-            {user &&
-              user.users.length > 0 &&
-              user.users.map((user, index) => {
-                return (
-                  <MenuItem
-                    key={index}
-                    value={`${user.first_name} ${user.last_name}`}
-                  >
-                    {`${user.first_name} ${user.last_name}`}
-                  </MenuItem>
-                );
-              })}
-          </Select>
+          <FormControl className={classes.formControl}>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={ticketChanges.assigned}
+              onChange={handleChange}
+              style={{ width: "60%", padding: "1% 0" }}
+            >
+              {user &&
+                user.users.length > 0 &&
+                user.users.map((user, index) => {
+                  return (
+                    <MenuItem
+                      key={index}
+                      value={`${user.first_name} ${user.last_name}`}
+                      onClick={() => setAssignedTo(user.id)}
+                    >
+                      {`${user.first_name} ${user.last_name}`}
+                    </MenuItem>
+                  );
+                })}
+            </Select>
+          </FormControl>
         ) : (
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={ticketChanges.priority}
-            onChange={handleChange}
-            style={{ width: "60%" }}
-          >
-            {ticket_info &&
-              ticket_info.priority.length > 0 &&
-              ticket_info.priority.map((item, index) => {
-                return (
-                  <MenuItem key={index} value={item}>
-                    {item}
-                  </MenuItem>
-                );
-              })}
-          </Select>
+          <FormControl className={classes.formControl}>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={`${
+                ticketChanges.priority[0]
+              }${ticketChanges.priority.slice(1).toLowerCase()}`}
+              onChange={handleChange}
+              style={{ width: "60%" }}
+            >
+              {ticket_info &&
+                ticket_info.priority.length > 0 &&
+                ticket_info.priority.map((item, index) => {
+                  return (
+                    <MenuItem key={index} value={item}>
+                      {item}
+                    </MenuItem>
+                  );
+                })}
+            </Select>
+          </FormControl>
         )}
       </div>
     );
@@ -184,9 +219,8 @@ export default function MobileTicketInfo({ ticket }) {
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "space-evenly",
-            height: "30%",
-            position: "realitve",
-            top: "30px",
+            height: "auto",
+            paddingTop: "30px",
           }}
         >
           Submit Changes?
@@ -195,10 +229,15 @@ export default function MobileTicketInfo({ ticket }) {
               display: "flex",
               width: "60%",
               justifyContent: "space-evenly",
+              paddingTop: "20px",
             }}
           >
-            <FontAwesomeIcon icon={faCheck} />
-            <FontAwesomeIcon icon={faTimes} />
+            <FontAwesomeIcon
+              onClick={submitTicketUpdates}
+              style={{ color: "green" }}
+              icon={faCheck}
+            />
+            <FontAwesomeIcon style={{ color: "red" }} icon={faTimes} />
           </div>
         </div>
       )}
