@@ -2,6 +2,7 @@
   height: 93%;
   width: 100%;
   display: flex;
+
   .left {
     height: 100%;
     width: 15%;
@@ -367,6 +368,9 @@
         }
       }
     }
+  }
+  .admin_middle {
+    width: 100%;
   }
 }
 .right {

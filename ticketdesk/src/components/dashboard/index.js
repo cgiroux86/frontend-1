@@ -241,7 +241,7 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-          <div className="middle">
+          <div className="admin_middle">
             {showCompanyInfo ? <CompanyInfo /> : <Admin />}
           </div>
         </div>
