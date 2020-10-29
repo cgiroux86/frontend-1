@@ -27,7 +27,7 @@ export default function TicketForm({ setSuccess, setOpen, fetchData }) {
     <form onSubmit={handleSubmit(onSubmit)}>
       <h2>Create Ticket</h2>
       <div>
-        <label htmlFfor="description">Description</label>
+        <label htmlFor="description">Description</label>
         <input
           name="description"
           ref={register({
@@ -37,7 +37,7 @@ export default function TicketForm({ setSuccess, setOpen, fetchData }) {
       </div>
       {errors.description && errors.description.message}
       <div>
-        <label htmlFfor="attempted_solutions">Attempted Solutions</label>
+        <label htmlFor="attempted_solutions">Attempted Solutions</label>
         <input
           name="attempted_solutions"
           ref={register({

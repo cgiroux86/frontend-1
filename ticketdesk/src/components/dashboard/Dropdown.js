@@ -100,8 +100,7 @@ export default function SimpleSelect({ name }) {
                     <MenuItem
                       key={index}
                       value={item}
-                      onClick={() => {
-                        console.log("item", item);
+                      onClick={(e) => {
                         dispatch(updateTicketDepartment(item));
                       }}
                     >

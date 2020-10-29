@@ -4,6 +4,7 @@ import NavBar from "../shared/NavBar";
 import Card from "./Card";
 import TicketInfo from "./TicketInfo";
 import CreateTicket from "./CreateTicket";
+import TicketForm from "./TicketForm";
 import axiosWithAuth from "../../utils/axiosWithAuth";
 import { useSelector, useDispatch } from "react-redux";
 import Alert from "./Alert";
@@ -17,8 +18,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChalkboardTeacher,
   faUsers,
+  faPlusCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import CompanyInfo from "../admin/CompanyInfo";
+import MobileMain from "./MobileMain";
+import TabletMain from "./TabletMain";
 
 const Dashboard = () => {
   const [active, setActive] = useState({
@@ -80,7 +84,7 @@ const Dashboard = () => {
   };
 
   return (
-    <>
+    <div style={{ height: "100vh" }}>
       <NavBar />
       {!user.is_admin_view ? (
         <div className="dashboard_section_container">
@@ -170,6 +174,15 @@ const Dashboard = () => {
             >
               <Alert setSuccess={setSuccess} />
             </div>
+            <div className="mobile_container">
+              <MobileMain
+                active={active}
+                setActive={setActive}
+                setSuccess={setSuccess}
+                fetchData={fetchData}
+              />
+            </div>
+
             {data &&
               data.tickets.length > 0 &&
               data.tickets.map((item) => {
@@ -188,10 +201,18 @@ const Dashboard = () => {
               <TicketInfo ticket={selectedTicket || data.tickets[0]} id={1} />
             )}
           </div>
+          <div className="tablet_main">
+            <TabletMain
+              fetchData={fetchData}
+              active={active}
+              setActive={setActive}
+              choose={choose}
+            />
+          </div>
         </div>
       ) : (
         <div className="dashboard_section_container">
-          <div className="left">
+          <div className="admin_left">
             <div className="main_left_container">
               <div className="nav_header">
                 <h1>Admin</h1>
@@ -220,12 +241,12 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-          <div className="middle">
+          <div className="admin_middle">
             {showCompanyInfo ? <CompanyInfo /> : <Admin />}
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

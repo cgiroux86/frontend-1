@@ -5,6 +5,7 @@ export const UPDATE_ASSIGNED = "UPDATE_ASSIGNED";
 export const UPDATE_TICKET_RESPONSES = "UPDATE_TICKET_RESPONSES";
 export const UPDATE_TICKET_DEPARTMENT = "UPDATE_TICKET_DEPARTMENT";
 export const RESET_TICKET_VIEWED = "RESET_TICKET_VIEWED";
+export const UPDATE_TICKET_STATUS = "UPDATE_TICKET_STATUS";
 
 export const setSelectedTicket = (ticket) => {
   return {
@@ -46,5 +47,12 @@ export const resetTicketViewed = (bool) => {
   return {
     type: RESET_TICKET_VIEWED,
     payload: bool,
+  };
+};
+
+export const updateTicketStatus = (status) => {
+  return {
+    type: UPDATE_TICKET_STATUS,
+    payload: status,
   };
 };

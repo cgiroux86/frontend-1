@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Avatar } from "@material-ui/core";
 import { getCardTicketStatus, getPriority } from "../../utils/functions";
 import AxiosWithAuth from "../../utils/axiosWithAuth";
@@ -9,12 +9,61 @@ import {
   setSelectedTicket,
 } from "../../redux/actions/ticketActions";
 import {
-  faCheckCircle,
-  faTimesCircle,
+  faCheck,
+  faTimes,
+  faEllipsisV,
 } from "@fortawesome/free-solid-svg-icons";
 import ConfirmPopover from "./Popover";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { makeStyles } from "@material-ui/core/styles";
+import Modal from "@material-ui/core/Modal";
+import MobileTicketInfo from "./MobileTicketInfo";
+
+function getModalStyle() {
+  const top = 50;
+  const left = 50;
+
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, -${left}%)`,
+    height: "80%",
+    margin: "0 auto",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+  };
+}
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    position: "absolute",
+    width: "80%",
+    height: "100%",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    backgroundColor: theme.palette.background.paper,
+    border: "2px solid #000",
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
+}));
 
 export default function Card({ info }) {
+  const classes = useStyles();
+  const [modalStyle] = useState(getModalStyle);
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+    // dispatch(setSelectedTicket(info));
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const deleteCard = (id) => {
     AxiosWithAuth()
       .delete(`/tickets/${id}`)
@@ -27,9 +76,15 @@ export default function Card({ info }) {
 
   const markCardComplete = (id) => {
     const updates = {
-      status: "complete",
+      status: "not started",
     };
-    AxiosWithAuth().put(`/tickets/${id}/update`, updates).then();
+    AxiosWithAuth()
+      .put(`/tickets/${id}/update`, updates)
+      .then((res) => {
+        console.log(res.data.tickets);
+        dispatch(fetchAllTickets(res.data.tickets));
+      })
+      .catch((err) => console.log(err));
   };
 
   const ticket = useSelector((state) => state.Tickets);
@@ -71,14 +126,17 @@ export default function Card({ info }) {
         <div className="popover_container">
           <ConfirmPopover
             text="Are you sure you want to make this complete?"
-            icon={faCheckCircle}
+            icon={faCheck}
             iconClass="complete"
+            fn={markCardComplete}
+            ticket_id={info.ticket_id}
           />
           <ConfirmPopover
-            icon={faTimesCircle}
+            icon={faTimes}
             iconClass="delete"
             text="Are you sure you wish to delete this card?"
-            onClick={() => deleteCard(info.ticket_id)}
+            fn={deleteCard}
+            ticket_id={info.ticket_id}
           ></ConfirmPopover>
         </div>
         <div className="card_ticket_status">
@@ -90,6 +148,19 @@ export default function Card({ info }) {
               width: "10px",
             }}
           ></div>
+        </div>
+        <div className="mobile_ellipsis">
+          <FontAwesomeIcon onClick={handleOpen} icon={faEllipsisV} />
+          <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="simple-modal-title"
+            aria-describedby="simple-modal-description"
+          >
+            <div style={modalStyle} className={classes.paper}>
+              <MobileTicketInfo ticket={info} />
+            </div>
+          </Modal>
         </div>
       </div>
     </div>
