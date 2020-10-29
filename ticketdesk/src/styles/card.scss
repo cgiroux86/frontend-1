@@ -1,5 +1,5 @@
 .card {
-  width: 70%;
+  width: 92%;
   margin: 2%;
   height: 100px;
   background: white;
@@ -85,9 +85,11 @@
       @media screen and (min-width: 768px) {
         display: none;
       }
-      display: flex;
-      justify-content: flex-end;
-      width: 80%;
+      @media screen and (max-width: 1024px) {
+        display: flex;
+        justify-content: flex-end;
+        width: 80%;
+      }
     }
     .popover_container {
       display: flex;

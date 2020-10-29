@@ -84,7 +84,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div>
+    <div style={{ height: "100vh" }}>
       <NavBar />
       {!user.is_admin_view ? (
         <div className="dashboard_section_container">
@@ -202,7 +202,12 @@ const Dashboard = () => {
             )}
           </div>
           <div className="tablet_main">
-            <TabletMain active={active} setActive={setActive} choose={choose} />
+            <TabletMain
+              fetchData={fetchData}
+              active={active}
+              setActive={setActive}
+              choose={choose}
+            />
           </div>
         </div>
       ) : (

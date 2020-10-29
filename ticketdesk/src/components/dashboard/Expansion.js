@@ -151,13 +151,6 @@ export default function MultiSelectTreeView() {
     setSortItems({ ...sortItems, [name]: !sortItems[name] });
   };
 
-  const handleNodeChange = (node) => {
-    console.log("THIS IS NODE", node);
-    expandedNodes.includes(node)
-      ? setExpandedNodes(expandedNodes.filter((el) => el === node))
-      : setExpandedNodes([...expandedNodes, node]);
-  };
-
   return (
     <MuiThemeProvider theme={TreeTheme}>
       <TreeView
@@ -165,7 +158,7 @@ export default function MultiSelectTreeView() {
         defaultCollapseIcon={<ExpandMoreIcon />}
         defaultExpandIcon={<ChevronRightIcon />}
         multiSelect
-        defaultExpanded={["1", "2"]}
+        defaultExpanded={["1"]}
       >
         <TreeItem
           nodeId="1"
