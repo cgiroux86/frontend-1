@@ -186,7 +186,7 @@ export default function TicketInfo() {
           ></textarea>
         </div>
         <div>
-          <button onClick={submitResponse}>Submit Response</button>
+          <button onClick={submitResponse}>Submit</button>
         </div>
       </div>
       <div style={{ height: "100%" }}>

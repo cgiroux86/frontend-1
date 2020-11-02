@@ -28,7 +28,7 @@ export default function TicketForm({ setSuccess, setOpen, fetchData }) {
       <h2>Create Ticket</h2>
       <div>
         <label htmlFor="description">Description</label>
-        <input
+        <textarea
           name="description"
           ref={register({
             required: "Required",
@@ -38,7 +38,7 @@ export default function TicketForm({ setSuccess, setOpen, fetchData }) {
       {errors.description && errors.description.message}
       <div>
         <label htmlFor="attempted_solutions">Attempted Solutions</label>
-        <input
+        <textarea
           name="attempted_solutions"
           ref={register({
             required: "Required",
@@ -48,7 +48,7 @@ export default function TicketForm({ setSuccess, setOpen, fetchData }) {
       {errors.attempted_solutions && errors.attempted_solutions.message}
       <div>
         <label htmlFor="more_info">More info?</label>
-        <input
+        <textarea
           name="more_info"
           ref={register({
             required: "Required",

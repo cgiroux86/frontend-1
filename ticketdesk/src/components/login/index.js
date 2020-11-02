@@ -49,6 +49,15 @@ const Login = ({ history }) => {
       password: response.profileObj.googleId,
     };
     axios.post("/auth/login", user).then((res) => {
+      console.log("RES", res);
+      const userData = {
+        id: res.data.id,
+        first_name: res.data.first_name,
+        last_name: res.data.last_name,
+        email: res.data.email,
+        admin: res.data.admin,
+      };
+      dispatch(loginUser(userData));
       localStorage.setItem("token", res.data.token);
       history.push("/dashboard");
     });

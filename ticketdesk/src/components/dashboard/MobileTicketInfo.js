@@ -12,6 +12,7 @@ import {
   resetTicketViewed,
 } from "../../redux/actions/ticketActions";
 import AxiosWithAuth from "../../utils/axiosWithAuth";
+import Responses from "./Responses";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -240,6 +241,7 @@ export default function MobileTicketInfo({ ticket }) {
           </div>
         </div>
       )}
+      <Responses />
     </div>
   );
 }
