@@ -94,8 +94,8 @@ export default function SimpleSelect({ name }) {
               value={`${ticket.selected.dept_id}`}
             >
               {ticket &&
-                ticket.department.length > 0 &&
-                ticket.department.map((item, index) => {
+                ticket.departments.length > 0 &&
+                ticket.departments.map((item, index) => {
                   return (
                     <MenuItem
                       key={index}
