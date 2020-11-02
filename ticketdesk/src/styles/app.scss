@@ -1,0 +1,27 @@
+@import "navbar.scss";
+@import "login.scss";
+@import "register.scss";
+@import "landing.scss"; // @import "admin.scss";
+@import "home.scss";
+@import "ticket_form.scss";
+@import "expansion.scss";
+@import "card.scss";
+@import "ticket_info.scss";
+@import "createTicket.scss";
+@import "dashboard.scss";
+@import "responses.scss";
+@import "admin.scss";
+@import "company_info.scss";
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  background: #f9fafb;
+  color: #2e2c48;
+}

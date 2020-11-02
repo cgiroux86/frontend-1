@@ -1,0 +1,99 @@
+.admin {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  width: 100%;
+  height: 100%;
+  h1 {
+    text-align: center;
+  }
+
+  .admin_name {
+    display: flex;
+    width: 80%;
+    height: 100%;
+    margin: 0 auto;
+
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+  }
+
+  .admin_card {
+    display: flex;
+    width: 100%;
+    height: 20%;
+    margin: 0 auto;
+
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+  }
+  .admin_user_card {
+    width: 45%;
+    height: 100%;
+    margin: 1%;
+    padding: 1%;
+    display: flex;
+    flex-direction: column;
+    background: white;
+    justify-content: space-evenly;
+    .admin_person {
+      display: flex;
+      justify-content: space-between;
+      width: 80%;
+      margin: 0 auto;
+      .admin_icon {
+        color: rgb(0, 36, 217);
+        font-size: 1.5rem;
+      }
+    }
+  }
+}
+.admin_left {
+  height: 93vh;
+  background: white;
+  width: 15%;
+  .main_left_container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 5%;
+  }
+
+  .nav_header {
+    padding: 0 0 0 5%;
+    font-size: 1.2rem;
+    text-decoration: underline;
+  }
+
+  .main {
+    h2 {
+      padding: 0 0 0 5%;
+      font-size: 1.5rem;
+      margin: 5% 0;
+    }
+
+    .active {
+      background: lightblue;
+      border-left: 4px solid blue;
+    }
+
+    .main_button {
+      margin: 5% 0;
+    }
+    .switch_admin_view {
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+      font-size: 2rem;
+      width: 80%;
+      margin-left: 2%;
+      padding: 15% 0;
+      color: navy;
+      cursor: pointer;
+      p {
+        font-size: 1.2rem;
+        color: black;
+      }
+    }
+  }
+}

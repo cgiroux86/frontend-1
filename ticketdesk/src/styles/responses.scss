@@ -1,0 +1,22 @@
+.view_response_container {
+  height: 200px;
+  margin: 1% auto;
+  border: 2px solid rgb(229, 228, 228);
+  overflow: auto;
+  @media screen and (max-width: 768px) {
+    height: 150px;
+  }
+
+  .response_avatar {
+    display: flex;
+    align-items: center;
+    width: 22%;
+    height: 15px;
+    justify-content: space-between;
+  }
+  .response_even {
+  }
+  .response_odd {
+    background: rgb(241, 241, 241);
+  }
+}

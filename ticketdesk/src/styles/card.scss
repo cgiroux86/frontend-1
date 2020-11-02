@@ -1,0 +1,125 @@
+.card {
+  width: 92%;
+  margin: 2%;
+  height: 100px;
+  background: white;
+  border-radius: 5px;
+  box-shadow: 2px 2px 2px 2px lightgrey;
+  display: flex;
+  justify-content: space-around;
+  cursor: pointer;
+  @media screen and (max-width: 768px) {
+    width: 90%;
+    padding: 0;
+    margin-left: 2%;
+    margin-right: 0;
+    margin-top: 5%;
+  }
+  .card_middle {
+    width: 70%;
+    height: 90%;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 1% auto;
+    margin-left: 5%;
+    overflow: hidden;
+  }
+  .card_right {
+    height: 100%;
+    width: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .no_priority {
+    background: magenta;
+    height: 100%;
+    width: 10px;
+  }
+  .low_priority {
+    background: green;
+    height: 100%;
+    width: 10px;
+  }
+
+  .high_priority {
+    background: red;
+    height: 100%;
+    width: 10px;
+  }
+  .medium_priority {
+    background: rgb(0, 41, 248);
+    font-size: 2rem;
+    width: 10px;
+  }
+
+  .card_left {
+    height: 100%;
+    width: 15%;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    border-left: 5px solid red;
+  }
+  .age_text {
+    margin: 1% 3%;
+    font-size: 1rem;
+    text-align: center;
+  }
+  .complete_delete_container {
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    height: 90%;
+    justify-content: space-around;
+    height: 100%;
+    @media screen and (max-width: 768px) {
+      width: 40%;
+      height: 90%;
+      margin: 1% 0;
+      justify-content: space-between;
+    }
+    .mobile_ellipsis {
+      @media screen and (min-width: 768px) {
+        display: none;
+      }
+      @media screen and (max-width: 1024px) {
+        display: flex;
+        justify-content: flex-end;
+        width: 80%;
+      }
+    }
+    .popover_container {
+      display: flex;
+      justify-content: space-evenly;
+      width: 100%;
+      @media screen and (max-width: 768px) {
+        margin-top: 5%;
+      }
+    }
+    .card_ticket_status {
+      font-size: 0.7rem;
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      @media screen and (max-width: 768px) {
+        display: none;
+      }
+    }
+    .complete_delete_options {
+      display: flex;
+      width: 100%;
+      justify-content: space-evenly;
+    }
+    .delete {
+      color: red;
+      font-size: 1.5rem;
+    }
+    .complete {
+      color: green;
+      font-size: 1.5rem;
+    }
+  }
+}
