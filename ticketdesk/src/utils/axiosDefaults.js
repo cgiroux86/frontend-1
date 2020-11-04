@@ -1,7 +1,7 @@
 import axios from "axios";
 
 axios.defaults.baseURL = (function () {
-  switch (process.env.REACT_APP_ENV) {
+  switch (process.env.NODE_ENV) {
     case "development":
       return process.env.REACT_APP_LOCAL_HOST;
     case "staging":
