@@ -44,6 +44,7 @@ const Login = ({ history }) => {
   };
 
   const responseGoogle = (response) => {
+    console.log("RESPONSE GOOGLE", response);
     const user = {
       email: response.profileObj.email,
       password: response.profileObj.googleId,
@@ -69,6 +70,15 @@ const Login = ({ history }) => {
       password: response.id,
     };
     axios.post("/auth/login", user).then((res) => {
+      console.log("RESPONSE FACEBOOK", res);
+      const userData = {
+        id: res.data.id,
+        first_name: res.data.first_name,
+        last_name: res.data.last_name,
+        email: res.data.email,
+        admin: res.data.admin,
+      };
+      dispatch(loginUser(userData));
       localStorage.setItem("token", res.data.token);
       history.push("/dashboard");
     });
@@ -117,7 +127,7 @@ const Login = ({ history }) => {
             onChange={handleChange}
             placeholder="Password"
           />
-          <button>Login</button>
+          <button type="submit">Login</button>
         </form>
       </div>
     </div>
