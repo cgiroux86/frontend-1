@@ -6,7 +6,8 @@ import axios from "axios";
 import { GoogleLogin } from "react-google-login";
 import FacebookLogin from "react-facebook-login";
 import { faFacebook } from "@fortawesome/free-brands-svg-icons";
-
+import { useDispatch } from "react-redux";
+import { loginUser } from "../../redux/actions/userActions";
 const Register = ({ history }) => {
   const [credentials, setCredentials] = useState({
     email: "",
@@ -16,6 +17,7 @@ const Register = ({ history }) => {
   });
 
   const [showPassword, setShowPassword] = useState(false);
+  const dispatch = useDispatch();
 
   const viewPassword = () => {
     setShowPassword(!showPassword);
@@ -32,8 +34,22 @@ const Register = ({ history }) => {
     e.preventDefault();
     axios
       .post("/auth/register", credentials)
-      .then((res) => {
-        console.log("response", res);
+      .then(() => {
+        axios
+          .post("/auth/login", credentials)
+          .then((res) => {
+            localStorage.setItem("token", res.data.token);
+            const userData = {
+              id: res.data.id,
+              first_name: res.data.first_name,
+              last_name: res.data.last_name,
+              email: res.data.email,
+              admin: res.data.admin,
+            };
+            dispatch(loginUser(userData));
+            history.push("/dashboard");
+          })
+          .catch((err) => console.log(err));
       })
       .catch((err) => {
         console.log(err);
@@ -49,7 +65,21 @@ const Register = ({ history }) => {
     };
     axios
       .post("/auth/register", user)
-      .then((res) => console.log(res))
+      .then((res) => {
+        axios.post("/auth/login", user).then((res) => {
+          console.log("RES", res);
+          const userData = {
+            id: res.data.id,
+            first_name: res.data.first_name,
+            last_name: res.data.last_name,
+            email: res.data.email,
+            admin: res.data.admin,
+          };
+          dispatch(loginUser(userData));
+          localStorage.setItem("token", res.data.token);
+          history.push("/dashboard");
+        });
+      })
       .catch((err) => console.log(err));
   };
 
@@ -63,12 +93,25 @@ const Register = ({ history }) => {
     };
     axios
       .post("/auth/register", user)
-      .then((res) => {
-        history.push("/login");
+      .then(() => {
+        axios
+          .post("/auth/login", user)
+          .then((res) => {
+            localStorage.setItem("token", res.data.token);
+            const userData = {
+              id: res.data.id,
+              first_name: res.data.first_name,
+              last_name: res.data.last_name,
+              email: res.data.email,
+              admin: res.data.admin,
+            };
+            dispatch(loginUser(userData));
+            history.push("/dashboard");
+          })
+          .catch((err) => console.log(err));
       })
       .catch((err) => console.log(err));
   };
-
   return (
     <div className="register">
       <NavBar />
@@ -131,7 +174,7 @@ const Register = ({ history }) => {
               icon={faEye}
             />
 
-            <button>Register</button>
+            <button type="submit">Register</button>
           </form>
         </div>
       </div>
