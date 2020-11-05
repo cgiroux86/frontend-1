@@ -126,7 +126,7 @@ export default function TicketInfo() {
                 </div>
               ) : (
                 <div className="assign_department">
-                  {" "}
+                  <strong>Priority: </strong>
                   {ticket.selected.priority || " No priority assigned"}
                 </div>
               )}

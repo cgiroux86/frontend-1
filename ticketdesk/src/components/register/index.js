@@ -66,7 +66,7 @@ const Register = ({ history }) => {
     axios
       .post("/auth/register", user)
       .then((res) => {
-        axios.post("/auth/login", user).then((res) => {
+        axios.post("/auth/login", { ...user, id: [res] }).then((res) => {
           console.log("RES", res);
           const userData = {
             id: res.data.id,
@@ -93,7 +93,7 @@ const Register = ({ history }) => {
     };
     axios
       .post("/auth/register", user)
-      .then(() => {
+      .then((response) => {
         axios
           .post("/auth/login", user)
           .then((res) => {
