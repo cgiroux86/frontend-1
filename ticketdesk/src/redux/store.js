@@ -40,7 +40,7 @@ const pReducer = persistReducer(rootPersistConfig, rootReducer);
 export const store = createStore(
   pReducer,
   initialState,
-  compose(applyMiddleware(thunk), composeWithDevTools())
+  composeWithDevTools(applyMiddleware(thunk))
 );
 
 export const persistor = persistStore(store);
